@@ -3,11 +3,14 @@ package com.englishweb.backend.controller;
 import com.englishweb.backend.entity.Role;
 import com.englishweb.backend.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.englishweb.backend.entity.User;
 import com.englishweb.backend.repository.UserRepository;
+
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -26,6 +29,11 @@ public class UserController {
 	@PostMapping("/user")
 	User newUser(@RequestBody User newUser){
 		return userRepository.save(newUser);
+	}
+
+	@GetMapping("/list")
+	List<User> showUser(){
+		return userRepository.findAll();
 	}
 	
 }

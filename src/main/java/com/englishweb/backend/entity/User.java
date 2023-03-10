@@ -35,7 +35,7 @@ public class User {
     @Column(name = "Level")
     private int level;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "RoleID")
     private Role role;
 
