@@ -13,6 +13,7 @@ import jakarta.persistence.Table;
 public class Level {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "LevelID")
     private int levelId;
 
 
