@@ -2,6 +2,7 @@ package com.englishweb.backend.controller;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,45 +19,59 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.englishweb.backend.service.CloudinaryService;
-import com.englishweb.backend.service.ImageService;
+import com.englishweb.backend.service.VideoService;
+
 import com.englishweb.backend.entity.Video;
+import com.englishweb.backend.entity.VideoDTO;
+import com.englishweb.backend.entity.Lesson;
 
 @RestController
 @RequestMapping("/cloudinary")
 @CrossOrigin
 public class CloudController {
 
+	private Lesson lesson = new Lesson();
+
 	@Autowired
 	CloudinaryService cloudinaryService;
 
 	@Autowired
-	ImageService imageService;
+	VideoService videoService;
 
 	@GetMapping("/list")
 	public ResponseEntity<List<Video>> list() {
-		List<Video> list = imageService.list();
+		List<Video> list = videoService.list();
 		return new ResponseEntity(list, HttpStatus.OK);
 	}
 
-	@PostMapping("/upload")
-	public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile) throws IOException {
-		
-		Map result = cloudinaryService.upload(multipartFile);
-		Video image = new Video((String)result.get("original_filename"), (String)result.get("url"),
-				(String)result.get("public_id"));
+	@GetMapping("/list/{id}")
+	public ResponseEntity<List<VideoDTO>> listById(@PathVariable(name = "id") int id) {
+		List<Video> lists = videoService.listId(id);
+		List<VideoDTO> listDTO = new ArrayList<>();
+		for (Video list : lists) {
+			listDTO.add(new VideoDTO(list.getId(), list.getVideoname(), list.getVideoURL()));
+		}
+		return new ResponseEntity(listDTO, HttpStatus.OK);
+	}
 
-		imageService.save(image);
+	@PostMapping("/upload/{id}")
+	public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile, @PathVariable int id)
+			throws IOException {
+		Map result = cloudinaryService.upload(multipartFile);
+		Video video = new Video((String) result.get("original_filename"), (String) result.get("url"), id, (String) result.get("public_id"));
+		videoService.save(video);
 		return new ResponseEntity(result, HttpStatus.OK);
 	}
 
-	// @DeleteMapping("/delete/{id}")
-	// public ResponseEntity<?> delete(@PathVariable("id") int id) throws IOException {
-	// 	if(!imageService.exists(id)) {
-	// 		return new ResponseEntity(HttpStatus.NOT_FOUND);
-	// 	}
-	// 	Image image = imageService.getOne(id).get();
-	// 	Map result = cloudinaryService.delete(image.getImageId());
-	// 	imageService.delete(id);
-	// 	return new ResponseEntity(result, HttpStatus.OK);
-	// }
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<?> delete(@PathVariable("id") int id) throws IOException {
+		if (!videoService.exists(id)) {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		}
+		Video video = videoService.getOne(id).get();
+		Map result = cloudinaryService.delete(video.getVideoId());
+		videoService.delete(id);
+		return new ResponseEntity(result, HttpStatus.OK);
+	}
+
 }

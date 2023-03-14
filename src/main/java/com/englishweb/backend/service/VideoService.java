@@ -7,33 +7,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import com.englishweb.backend.entity.Video;
 import com.englishweb.backend.repository.VideoRepository;
 
 @Service
 @Transactional
-public class ImageService {
+public class VideoService {
 	
 	@Autowired
-	VideoRepository imageRepository;
+	VideoRepository videoRepository;
 	
 	public List<Video> list() {
-		return imageRepository.findByOrderById();
+		return videoRepository.findAll();
+	}
+
+	public List<Video> listId(int lessonid) {
+		return videoRepository.findByOrderById(lessonid);
 	}
 	
 	public void delete(int id) {
-		imageRepository.deleteById(id);
+		videoRepository.deleteById(id);
 	}
 	
-	public void save(Video image) {
-		imageRepository.save(image);
+	public void save(Video video) {
+		videoRepository.save(video);
 	}
 	
 	public Optional<Video> getOne(int id) {
-		return imageRepository.findById(id);
+		return videoRepository.findById(id);
 	}
 	
 	public boolean exists(int id) {
-		return imageRepository.existsById(id);
+		return videoRepository.existsById(id);
 	}
 }

@@ -16,18 +16,20 @@ public class Video {
 	private int id;
 	private String videoname;
 	private String videoURL;
+	private String videoId;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "LessonID")
-	private String lessonID;
+    private Lesson lesson = new Lesson();
 	
 	public Video() {
 	}
 
-	public Video(String videoname, String videoURL, String lessonID) {
+	public Video(String videoname, String videoURL, int lesson, String videoId) {
 		this.videoname = videoname;
 		this.videoURL = videoURL;
-		this.lessonID = lessonID;
+		this.lesson.setLessonId(lesson);
+		this.videoId = videoId;
 	}
 
 	public int getId() {
@@ -38,7 +40,7 @@ public class Video {
 		this.id = id;
 	}
 
-	public String videoname() {
+	public String getVideoname() {
 		return videoname;
 	}
 
@@ -54,13 +56,20 @@ public class Video {
 		this.videoURL = videoURL;
 	}
 
-	public String getLessonID() {
-		return lessonID;
+	public Lesson getLesson() {
+		return lesson;
 	}
 
-	public void setLessonID(String lessonID) {
-		this.lessonID = lessonID;
+	public void setLesson(Lesson lesson) {
+		this.lesson = lesson;
+	}	
+
+	public String getVideoId() {
+		return videoId;
 	}
-	
+
+	public void setVideoId(String videoId) {
+		this.videoId = videoId;
+	}
 	
 }
