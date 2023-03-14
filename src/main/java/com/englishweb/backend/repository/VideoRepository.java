@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.englishweb.backend.entity.Image;
+import com.englishweb.backend.entity.Video;
 
 @Repository
-public interface ImageRepository extends JpaRepository<Image, Integer>{
-	List<Image> findByOrderById();
+public interface VideoRepository extends JpaRepository<Video, Integer>{
+	List<Video> findByOrderById();
 	
 }

@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.englishweb.backend.service.CloudinaryService;
 import com.englishweb.backend.service.ImageService;
-import com.englishweb.backend.entity.Image;
+import com.englishweb.backend.entity.Video;
 
 @RestController
 @RequestMapping("/cloudinary")
@@ -33,8 +33,8 @@ public class CloudController {
 	ImageService imageService;
 
 	@GetMapping("/list")
-	public ResponseEntity<List<Image>> list() {
-		List<Image> list = imageService.list();
+	public ResponseEntity<List<Video>> list() {
+		List<Video> list = imageService.list();
 		return new ResponseEntity(list, HttpStatus.OK);
 	}
 
@@ -42,21 +42,21 @@ public class CloudController {
 	public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile) throws IOException {
 		
 		Map result = cloudinaryService.upload(multipartFile);
-		Image image = new Image((String)result.get("original_filename"), (String)result.get("url"),
+		Video image = new Video((String)result.get("original_filename"), (String)result.get("url"),
 				(String)result.get("public_id"));
 
 		imageService.save(image);
 		return new ResponseEntity(result, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete(@PathVariable("id") int id) throws IOException {
-		if(!imageService.exists(id)) {
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
-		}
-		Image image = imageService.getOne(id).get();
-		Map result = cloudinaryService.delete(image.getImageId());
-		imageService.delete(id);
-		return new ResponseEntity(result, HttpStatus.OK);
-	}
+	// @DeleteMapping("/delete/{id}")
+	// public ResponseEntity<?> delete(@PathVariable("id") int id) throws IOException {
+	// 	if(!imageService.exists(id)) {
+	// 		return new ResponseEntity(HttpStatus.NOT_FOUND);
+	// 	}
+	// 	Image image = imageService.getOne(id).get();
+	// 	Map result = cloudinaryService.delete(image.getImageId());
+	// 	imageService.delete(id);
+	// 	return new ResponseEntity(result, HttpStatus.OK);
+	// }
 }

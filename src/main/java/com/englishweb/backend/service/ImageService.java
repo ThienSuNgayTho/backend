@@ -7,17 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.englishweb.backend.entity.Image;
-import com.englishweb.backend.repository.ImageRepository;
+import com.englishweb.backend.entity.Video;
+import com.englishweb.backend.repository.VideoRepository;
 
 @Service
 @Transactional
 public class ImageService {
 	
 	@Autowired
-	ImageRepository imageRepository;
+	VideoRepository imageRepository;
 	
-	public List<Image> list() {
+	public List<Video> list() {
 		return imageRepository.findByOrderById();
 	}
 	
@@ -25,11 +25,11 @@ public class ImageService {
 		imageRepository.deleteById(id);
 	}
 	
-	public void save(Image image) {
+	public void save(Video image) {
 		imageRepository.save(image);
 	}
 	
-	public Optional<Image> getOne(int id) {
+	public Optional<Video> getOne(int id) {
 		return imageRepository.findById(id);
 	}
 	
