@@ -10,10 +10,12 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.multipart.MultipartFile;
 
 @SpringBootApplication
 @EnableScheduling
+@CrossOrigin
 public class CloudinaryService {
 
 	Cloudinary cloudinary;
@@ -34,17 +36,15 @@ public class CloudinaryService {
 		// }
 	}
 
-	public Map upload(MultipartFile multipartFile) throws IOException {
-		File file = convert(multipartFile);
-		// Map result =
-		// cloudinary.uploader().upload("C:\\Users\\longv\\Downloads\\335611627_618679816747996_399780896108158274_n.mp4",ObjectUtils.asMap("resource_type","auto"));
-		Map params = ObjectUtils.asMap(
-				"folder", "EnglishWeb",
-				"resource_type", "video");
-		Map result = cloudinary.uploader().upload(file, params);
-		file.delete();
-		return result;
-	}
+	// public Map upload(String string) throws IOException {
+	// 	File file = new File(string).getAbsoluteFile();
+	// 	Map params = ObjectUtils.asMap(
+	// 			"folder", "EnglishWeb",
+	// 			"resource_type", "video");
+	// 	Map result = cloudinary.uploader().upload(file, params);
+	// 	// file.delete();
+	// 	return result;
+	// }
 
 	public Map delete(String id) throws IOException {
 		Map result = cloudinary.uploader().destroy(id, ObjectUtils.asMap(
@@ -59,6 +59,16 @@ public class CloudinaryService {
 		fileOutputStream.write(multipartFile.getBytes());
 		fileOutputStream.close();
 		return file;
+	}
+
+	public Map upload(MultipartFile multipartFile) throws IOException {
+		File file = convert(multipartFile);
+		Map params = ObjectUtils.asMap(
+				"folder", "EnglishWeb",
+				"resource_type", "video");
+		Map result = cloudinary.uploader().upload(file, params);
+		file.delete();
+		return result;
 	}
 
 }

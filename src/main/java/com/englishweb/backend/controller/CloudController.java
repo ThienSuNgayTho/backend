@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +25,7 @@ import com.englishweb.backend.service.VideoService;
 
 import com.englishweb.backend.entity.Video;
 import com.englishweb.backend.entity.VideoDTO;
+import com.englishweb.backend.repository.VideoRepository;
 import com.englishweb.backend.entity.Lesson;
 
 @RestController
@@ -58,7 +61,8 @@ public class CloudController {
 	public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile, @PathVariable int id)
 			throws IOException {
 		Map result = cloudinaryService.upload(multipartFile);
-		Video video = new Video((String) result.get("original_filename"), (String) result.get("url"), id, (String) result.get("public_id"));
+		Video video = new Video((String) result.get("original_filename"), (String) result.get("url"), id,
+				(String) result.get("public_id"));
 		videoService.save(video);
 		return new ResponseEntity(result, HttpStatus.OK);
 	}
@@ -74,4 +78,17 @@ public class CloudController {
 		return new ResponseEntity(result, HttpStatus.OK);
 	}
 
+	// @PutMapping("/update/{id}")
+	// public ResponseEntity<Video> update(@PathVariable("id") int id, @RequestParam Video video,
+	// 		@RequestParam MultipartFile multipartFile)
+	// 		throws IOException {
+	// 	Video video = videoService.getOne(id).get();
+	// 	Map result = cloudinaryService.delete(video.getVideoId());
+	// 	result = cloudinaryService.upload(multipartFile);
+	// 	video = new Video((String) result.get("original_filename"), (String) result.get("url"), id,
+	// 			(String) result.get("public_id"));
+	// 	video.setLesson(video.getLesson());
+	// 	videoService.save(video);
+	// 	return new ResponseEntity(HttpStatus.OK);
+	// }
 }
