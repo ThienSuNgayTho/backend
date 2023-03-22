@@ -11,10 +11,12 @@ public interface GameService {
 
     List<FlashCard> findAllByLessonId(int lessonid);
 
-    void saveFlashCard(FlashCard flashCard);
+    void saveFlashCard(String frontHTML, String backHTML, int lessonId);
 
     void deleteFlashCardById(Long flashCardId);
 
     FlashCard findFlashCardById(Long flashCardId);
+
+    void updateFlashCard(FlashCard flashCard);
 
 }

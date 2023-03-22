@@ -3,6 +3,9 @@ package com.englishweb.backend.service;
 
 import com.englishweb.backend.entity.FlashCard;
 import com.englishweb.backend.repository.FlashCardRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +29,10 @@ public class GameServiceImpl implements GameService{
         return flashCardRepository.findAllByLessonId(lessonid);
     }
 
+    @Transactional
     @Override
-    public void saveFlashCard (FlashCard flashCard){
-        flashCardRepository.save(flashCard);
+    public void saveFlashCard (String frontHTML, String backHTML, int lessonId){
+        flashCardRepository.saveFlashCard(frontHTML, backHTML, lessonId);;
     }
 
     @Override
@@ -39,5 +43,10 @@ public class GameServiceImpl implements GameService{
     @Override
     public FlashCard findFlashCardById(Long flashCardId){
        return flashCardRepository.findById(flashCardId).orElseThrow(() -> new IllegalArgumentException("Invalid flashcard Id:" + flashCardId));
+    }
+
+    @Override
+    public void updateFlashCard(FlashCard flashCard){
+        flashCardRepository.save(flashCard);
     }
 }
