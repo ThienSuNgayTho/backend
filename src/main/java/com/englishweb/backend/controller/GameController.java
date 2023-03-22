@@ -3,10 +3,7 @@ package com.englishweb.backend.controller;
 import com.englishweb.backend.entity.*;
 import com.englishweb.backend.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,5 +40,31 @@ public class GameController {
         return fillInBlankDTOS;
     }
 
+    @GetMapping("/loadFillInBlank")
+    List<FillInBlank> loadFillInBlank(){
+        return gameService.findAllFillInBlank();
+    }
 
+    @PostMapping("/saveFillInBlank")
+    void saveFillInBlank(@RequestBody FillInBlank fillInBlank){
+        gameService.saveFillInBlank(fillInBlank);
+    }
+
+    @DeleteMapping("/deleteFillInBlank/{id}")
+    void deleteFillInBlank(@PathVariable (name = "id") Long id){
+        gameService.deleteFillInBlank(id);
+    }
+
+    @PutMapping("/updateFillInBlank/{id}")
+    void updateFillInBlank(@PathVariable (name = "id") Long id, @RequestBody FillInBlank fillInBlank){
+        FillInBlank fillInBlanksToUpdate = gameService.findFillInBlanksById(id);
+        fillInBlanksToUpdate.setQuestion(fillInBlank.getQuestion());
+        fillInBlanksToUpdate.setAnswer(fillInBlank.getAnswer());
+        gameService.saveFillInBlank(fillInBlanksToUpdate);
+    }
+
+    @GetMapping("/findFillInBlank/{id}")
+    FillInBlank loadFillInBlankById(@PathVariable (name = "id") Long id){
+        return gameService.findFillInBlanksById(id);
+    }
 }

@@ -11,4 +11,14 @@ public interface GameService {
     List<FlashCard> findAllByLessonId(int lessonid);
 
     List<FillInBlank> findAllByLevelId(Long levelid);
+
+    List<FillInBlank> findAllFillInBlank();
+
+    void saveFillInBlank(FillInBlank fillInBlank);
+
+    void deleteFillInBlank(Long id);
+ 
+    FillInBlank findFillInBlanksById(Long id);
+
+    
 }

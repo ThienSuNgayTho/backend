@@ -9,4 +9,8 @@ import java.util.List;
 public interface FillInBlankRepository extends JpaRepository<FillInBlank, Long> {
     @Query(value = "select * from fill_in_blank where levelid =?1 order by rand() limit 5 ", nativeQuery = true)
     List<FillInBlank> findAllByLevelId(Long levelid);
+
+    @Query(value = "select * from fill_in_blank where id =?1 ", nativeQuery = true)
+    List<FillInBlank> findFillInBlanksById(Long id);
+    
 }

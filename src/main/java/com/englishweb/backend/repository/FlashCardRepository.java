@@ -11,5 +11,6 @@ public interface FlashCardRepository extends JpaRepository<FlashCard, Long > {
     @Query(value = "SELECT * FROM flash_card WHERE lessonid = ?1", nativeQuery = true)
     List<FlashCard> findAllByLessonId(int lessonid);
 
+    
 
 }

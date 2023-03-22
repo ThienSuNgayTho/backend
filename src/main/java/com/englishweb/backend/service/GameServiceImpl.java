@@ -33,4 +33,26 @@ public class GameServiceImpl implements GameService{
     public List<FillInBlank> findAllByLevelId(Long levelid){
         return fillInBlankRepository.findAllByLevelId(levelid);
     }
+
+    @Override
+    public List<FillInBlank> findAllFillInBlank(){
+        return fillInBlankRepository.findAll();
+    }
+
+    @Override
+    public void saveFillInBlank(FillInBlank fillInBlank){
+        fillInBlankRepository.save(fillInBlank);
+    }
+
+    @Override
+    public void deleteFillInBlank(Long id){
+        fillInBlankRepository.deleteById(id);
+    }
+
+    @Override
+    public FillInBlank findFillInBlanksById(Long id){
+        return fillInBlankRepository.findById(id).orElseThrow(() -> new RuntimeException("FillInBlank not found"));
+    }
+
+    
 }
