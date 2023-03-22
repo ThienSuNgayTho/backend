@@ -71,4 +71,21 @@ public class CloudinaryService {
 		return result;
 	}
 
+	public Map uploadImage(MultipartFile multipartFile) throws IOException {
+		File file = convert(multipartFile);
+		Map params = ObjectUtils.asMap(
+				"folder", "EnglishWeb Image",
+				"resource_type", "image");
+		Map result = cloudinary.uploader().upload(file, params);
+		file.delete();
+		return result;
+	}
+
+	public Map deleteImage(String id) throws IOException {
+		Map result = cloudinary.uploader().destroy(id, ObjectUtils.asMap(
+			"folder", "EnglishWeb",
+			"resource_type", "image"));
+		return result;
+	}
+
 }

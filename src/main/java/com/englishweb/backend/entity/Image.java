@@ -1,6 +1,9 @@
 package com.englishweb.backend.entity;
 
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,17 +13,22 @@ public class Image {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String name;
+	private String imageName;
 	private String imageURL;
 	private String imageId;
-	
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "CourseID")
+	private Course course = new Course();
+
 	public Image() {
 	}
 
-	public Image(String name, String imageURL, String imageId) {
-		this.name = name;
+	public Image(String imageName, String imageURL, String imageId, int course) {
+		this.imageName = imageName;
 		this.imageURL = imageURL;
 		this.imageId = imageId;
+		this.course.setCourseID(course);
 	}
 
 	public int getId() {
@@ -31,12 +39,12 @@ public class Image {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getImageName() {
+		return imageName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
 	}
 
 	public String getImageURL() {
@@ -54,6 +62,13 @@ public class Image {
 	public void setImageId(String imageId) {
 		this.imageId = imageId;
 	}
-	
-	
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}	
+
 }
