@@ -2,6 +2,9 @@ package com.englishweb.backend.controller;
 
 import com.englishweb.backend.entity.FlashCard;
 import com.englishweb.backend.entity.User;
+import com.englishweb.backend.entity.WADTO;
+import com.englishweb.backend.entity.WAOptions;
+import com.englishweb.backend.entity.WAQuestions;
 import com.englishweb.backend.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,17 +24,37 @@ public class GameController {
     GameService gameService;
 
     @GetMapping("/loadFlashCard")
-    List<FlashCard> loadFlashCard(){
+    List<FlashCard> loadFlashCard() {
         return gameService.findAll();
     }
 
     @GetMapping("/loadFlashCard/{lessonid}")
-    List<FlashCardDTO> loadFlashCardByLessonID(@PathVariable (name = "lessonid") int lessonId){
+    List<FlashCardDTO> loadFlashCardByLessonID(@PathVariable(name = "lessonid") int lessonId) {
         List<FlashCard> flashCards = gameService.findAllByLessonId(lessonId);
         List<FlashCardDTO> flashCardDTOs = new ArrayList<>();
         for (FlashCard flashCard : flashCards) {
-            flashCardDTOs.add(new FlashCardDTO(flashCard.getFlashCardId(), flashCard.getFrontHTML(), flashCard.getBackHTML()));
+            flashCardDTOs.add(
+                    new FlashCardDTO(flashCard.getFlashCardId(), flashCard.getFrontHTML(), flashCard.getBackHTML()));
         }
         return flashCardDTOs;
+    }
+
+    @GetMapping("/word/{levelid}")
+    List<WADTO> loadWordByLevelID(@PathVariable(name = "levelid") Long levelId) {
+        List<WAQuestions> wadto = gameService.findAllByLevelId(levelId);
+        List<WADTO> WADTOs = new ArrayList<>();
+
+        for (WAQuestions waQuestion : wadto) {
+            List<WAOptions> waop = gameService.findByQuestion(waQuestion.getId());
+            WADTOs.add(
+                    new WADTO(waQuestion.getId(), waQuestion.getQuestionText(),
+                            waop));
+        }
+        return WADTOs;
+    }
+
+    @GetMapping("/word")
+    List<WAQuestions> loadWord() {
+        return gameService.getAllQuestions();
     }
 }

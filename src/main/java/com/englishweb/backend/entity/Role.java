@@ -1,4 +1,5 @@
 package com.englishweb.backend.entity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,13 +13,13 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "Roles")
 public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "RoleID")
-    private int roleId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "RoleID")
+	private int roleId;
 
-    @Column(name = "RoleName")
-    private String roleName;
+	@Column(name = "RoleName")
+	private String roleName;
 
 	public int getRoleId() {
 		return roleId;
@@ -36,6 +37,6 @@ public class Role {
 		this.roleName = roleName;
 	}
 
-    // constructors, getters, and setters
-    
+	// constructors, getters, and setters
+
 }

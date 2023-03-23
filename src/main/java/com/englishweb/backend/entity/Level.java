@@ -1,4 +1,5 @@
 package com.englishweb.backend.entity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,12 +12,12 @@ import jakarta.persistence.Table;
 
 @Entity
 public class Level {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int levelId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "levelId")
+	private int levelId;
 
-
-    private String levelName;
+	private String levelName;
 
 	public int getLevelId() {
 		return levelId;
@@ -34,7 +35,6 @@ public class Level {
 		this.levelName = levelName;
 	}
 
-    // constructors, getters, and setters
-    
-}
+	// constructors, getters, and setters
 
+}

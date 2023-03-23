@@ -13,14 +13,16 @@ public class FlashCard {
 
     private String backHTML;
 
-    public Long getFlashCardId() {
-        return flashCardId;
-    }
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "LessonID")
     private Lesson lesson;
+
     public void setFlashCardId(Long flashCardId) {
         this.flashCardId = flashCardId;
+    }
+
+    public Long getFlashCardId() {
+        return flashCardId;
     }
 
     public String getFrontHTML() {
