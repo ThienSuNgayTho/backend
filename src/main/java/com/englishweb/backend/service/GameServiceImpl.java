@@ -4,17 +4,19 @@ import java.util.List;
 
 import com.englishweb.backend.entity.FillInBlank;
 import com.englishweb.backend.entity.FlashCard;
+import com.englishweb.backend.repository.FillInBlankRepository;
 import com.englishweb.backend.repository.FlashCardRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.englishweb.backend.repository.FillInBlankRepository;
 
 @Service
 public class GameServiceImpl implements GameService{
 
     @Autowired
     FlashCardRepository flashCardRepository;
-    
 
     @Autowired
     FillInBlankRepository fillInBlankRepository;
@@ -54,5 +56,35 @@ public class GameServiceImpl implements GameService{
         return fillInBlankRepository.findById(id).orElseThrow(() -> new RuntimeException("FillInBlank not found"));
     }
 
+    @Transactional
+    @Override
+    public void saveFlashCard (String frontHTML, String backHTML, int lessonId){
+        flashCardRepository.saveFlashCard(frontHTML, backHTML, lessonId);;
+    }
+
+    @Override
+    public void deleteFlashCardById(Long flashCardId){
+        flashCardRepository.deleteById(flashCardId);
+    }
+
+    @Override
+    public FlashCard findFlashCardById(Long flashCardId){
+       return flashCardRepository.findById(flashCardId).orElseThrow(() -> new IllegalArgumentException("Invalid flashcard Id:" + flashCardId));
+    }
+
+    @Override
+    public void updateFlashCard(FlashCard flashCard){
+        flashCardRepository.save(flashCard);
+    }
     
+    @Transactional
+    @Override
+    public void saveFillInBlankByLevel(String question, String answer, Long levelId){
+        fillInBlankRepository.saveFillInBlankByLevel(question, answer, levelId);
+    }
+
+    @Override
+    public List<FillInBlank> findAllFillInBlanksByLevelId(Long levelId){
+        return fillInBlankRepository.findAllFillInBlanksByLevelId(levelId);
+    }
 }

@@ -5,9 +5,11 @@ import com.englishweb.backend.entity.FlashCard;
 import com.englishweb.backend.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface GameService {
     List<FlashCard> findAll();
+
     List<FlashCard> findAllByLessonId(int lessonid);
 
     List<FillInBlank> findAllByLevelId(Long levelid);
@@ -16,9 +18,19 @@ public interface GameService {
 
     void saveFillInBlank(FillInBlank fillInBlank);
 
+    void saveFillInBlankByLevel(String question, String answer, Long levelId);
+
     void deleteFillInBlank(Long id);
  
     FillInBlank findFillInBlanksById(Long id);
-
     
+    void saveFlashCard(String frontHTML, String backHTML, int lessonId);
+
+    void deleteFlashCardById(Long flashCardId);
+
+    FlashCard findFlashCardById(Long flashCardId);
+
+    void updateFlashCard(FlashCard flashCard);
+
+    List<FillInBlank> findAllFillInBlanksByLevelId(Long levelId);
 }

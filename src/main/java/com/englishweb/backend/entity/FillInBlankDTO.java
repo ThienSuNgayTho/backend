@@ -7,10 +7,13 @@ public class FillInBlankDTO {
 
     private String answer;
 
-    public FillInBlankDTO(long id, String question, String answer) {
+    private Long level;
+
+    public FillInBlankDTO(long id, String question, String answer, Long level) {
         this.id = id;
         this.question = question;
         this.answer = answer;
+        this.level = level;
     }
 
     public long getId() {
@@ -35,5 +38,13 @@ public class FillInBlankDTO {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public Long getLevel() {
+        return level;
+    }
+    
+    public void setLevel(Long level) {
+        this.level = level;
     }
 }
