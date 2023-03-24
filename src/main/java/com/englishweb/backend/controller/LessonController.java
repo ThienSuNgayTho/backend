@@ -37,8 +37,14 @@ public class LessonController {
 
     @PostMapping("/saveLesson/{courseId}")
     void saveLesson(@PathVariable (name = "courseId") int courseId , @RequestBody Lesson lesson){
-        lessonService.saveLessonByCourse(lesson.getLessonName(), lesson.getContent(), courseId);
+        lessonService.saveCourse(lesson.getLessonName(), lesson.getContent(), courseId);
     }
 
-    
+    @PutMapping("/updateLesson/{lessonId}")
+    void updateLesson(@PathVariable (name = "lessonId") int lessonId , @RequestBody Lesson lesson){
+        Lesson lessonUpdate = lessonService.findLessonById(lessonId);
+        lessonUpdate.setLessonName(lesson.getLessonName());
+        lessonUpdate.setContent(lesson.getContent());
+        lessonService.updateLesson(lessonUpdate);
+    }
 }

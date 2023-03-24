@@ -16,6 +16,12 @@ public class LessonServiceImpl implements LessonService{
     @Autowired
     LessonRepository lessonRepository;
 
+    @Transactional
+    @Override
+    public void saveCourse(String lessonName, String content, int courseId) {
+        lessonRepository.saveLesson(lessonName, content, courseId);
+    }
+
     @Override
     public List<Lesson> findAll() {
         return lessonRepository.findAll();
@@ -30,9 +36,15 @@ public class LessonServiceImpl implements LessonService{
     public void deleteLessonById(int lessonId) {
         lessonRepository.deleteById(lessonId);
     }
+    
+    @Override
+    public void updateLesson(Lesson lesson) {
+        lessonRepository.save(lesson);
+    }
 
     @Override
-    public void saveLessonByCourse(String lessonName, String content, int courseId) {
-        lessonRepository.saveLesson(lessonName, content, courseId);
+    public Lesson findLessonById(int lessonId){
+        return lessonRepository.findById(lessonId).orElseThrow(() -> new IllegalArgumentException("Invalid lesson Id:" + lessonId));
     }
+
 }
