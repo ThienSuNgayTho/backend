@@ -25,14 +25,9 @@ public class LessonController {
         List<Lesson> lessons = lessonService.findAllByCourseId(courseId);
         List<LessonDTO> lessonDTOs = new ArrayList<>();
         for (Lesson lesson : lessons) {
-            lessonDTOs.add(new LessonDTO(lesson.getLessonId(), lesson.getLessonName(), lesson.getContent(), lesson.getCourse().getCourseId()));
+            lessonDTOs.add(new LessonDTO(lesson.getLessonId(), lesson.getLessonName(), lesson.getContent(), lesson.getCourse().getCourseID()));
         }
         return lessonDTOs;
-    }
-
-    @PostMapping("/saveLesson")
-    void saveLesson(@RequestBody Lesson lesson){
-        lessonService.saveLesson(lesson.getLessonName(), lesson.getContent(), lesson.getCourse().getCourseId());
     }
 
     @DeleteMapping("/deleteLesson/{id}")

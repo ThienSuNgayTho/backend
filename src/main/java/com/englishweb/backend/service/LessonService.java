@@ -9,9 +9,7 @@ public interface LessonService {
 
     List<Lesson> findAllByCourseId(int courseId);
 
-    void saveLesson(String lessonName, String content, int courseId);
-
     void deleteLessonById(int lessonId);
 
-    
+    void saveLessonByCourse(String lessonName, String content, int courseId);
 }

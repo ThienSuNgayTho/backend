@@ -27,12 +27,12 @@ public class LessonServiceImpl implements LessonService{
     }
 
     @Override
-    public void saveLesson(String lessonName, String content, int courseId) {
-        lessonRepository.saveLesson(lessonName, content, courseId);
+    public void deleteLessonById(int lessonId) {
+        lessonRepository.deleteById(lessonId);
     }
 
     @Override
-    public void deleteLessonById(int lessonId) {
-        lessonRepository.deleteById(lessonId);
+    public void saveLessonByCourse(String lessonName, String content, int courseId) {
+        lessonRepository.saveLesson(lessonName, content, courseId);
     }
 }

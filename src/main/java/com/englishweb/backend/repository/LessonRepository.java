@@ -11,9 +11,9 @@ import org.springframework.data.jpa.repository.Query;
 public interface LessonRepository extends JpaRepository<Lesson, Integer>{
     @Modifying
     @Query(value = "INSERT INTO lesson (lessonname, content, courseid) VALUES (?1, ?2, ?3)", nativeQuery = true)
-    void saveLesson(String lessonName, String content, int courseId);
+    void saveLessonByCourse(String lessonName, String content, int courseId);
 
-    @Query(value = "SELECT * FROM lesson WHERE courseid = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM lesson WHERE course_id = ?1", nativeQuery = true)
     List<Lesson> findAllByCourseId(int courseId);
 
     @Query(value = "SELECT * FROM lesson WHERE lessonid = ?1", nativeQuery = true)
