@@ -1,50 +1,27 @@
 package com.englishweb.backend.entity;
-import jakarta.persistence.*;
 
-@Entity
-@Table(name = "Course")
-public class Course {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CourseID")
+public class CourseDTO {
     private Integer courseID;
-
-    @Column(name = "CourseName")
     private String courseName;
-
-    @Column(name = "Descriptions")
     private String descriptions;
-
-    @ManyToOne
-    @JoinColumn(name = "LevelID")
-    private Level level;
-
-    @Column(name = "Images")
     private String images;
-
-    @Column(name = "Payment")
     private Integer payment;
+    private Integer levelId;
+    private Integer teacherId;
 
-    @ManyToOne
-    @JoinColumn(name = "TeacherId")
-    private User teacher;
-
-    // Constructors, getters, and setters
-
-    public Course() {
+    public CourseDTO() {
     }
 
-    public Course(String courseName, String descriptions, Level level, String images, Integer payment, User teacher) {
+    public CourseDTO(Integer courseID, String courseName, String descriptions, String images, Integer payment,
+            Integer levelId, Integer teacherId) {
+        this.courseID = courseID;
         this.courseName = courseName;
         this.descriptions = descriptions;
-        this.level = level;
         this.images = images;
         this.payment = payment;
-        this.teacher = teacher;
+        this.levelId = levelId;
+        this.teacherId = teacherId;
     }
-
-    // Getters and setters
 
     public Integer getCourseID() {
         return courseID;
@@ -70,14 +47,6 @@ public class Course {
         this.descriptions = descriptions;
     }
 
-    public Level getLevel() {
-        return level;
-    }
-
-    public void setLevel(Level level) {
-        this.level = level;
-    }
-
     public String getImages() {
         return images;
     }
@@ -94,13 +63,19 @@ public class Course {
         this.payment = payment;
     }
 
-    public User getTeacher() {
-        return teacher;
+    public Integer getLevelId() {
+        return levelId;
     }
 
-    public void setTeacher(User teacher) {
-        this.teacher = teacher;
+    public void setLevelId(Integer levelId) {
+        this.levelId = levelId;
     }
 
+    public Integer getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(Integer teacherId) {
+        this.teacherId = teacherId;
+    }
 }
-

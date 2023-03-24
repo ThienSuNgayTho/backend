@@ -6,5 +6,8 @@ import java.util.List;
 
 public interface UserService {
     void saveOrUpdateUser (User user);
+
     List<User> findAll();
+
+    User findUserById(int userId);
 }
