@@ -47,4 +47,10 @@ public class CourseServiceImpl implements CourseService {
     public void updateCourse(Course course) {
         courseRepository.save(course);
     }
+
+    @Transactional
+    @Override
+    public void deleteCourse(int courseId) {
+        courseRepository.deleteFullCourse(courseId);       
+    }
 }

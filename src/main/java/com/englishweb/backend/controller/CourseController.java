@@ -22,9 +22,10 @@ public class CourseController {
     @Autowired
     UserService userService;
 
-    @PostMapping("/saveCourse/{levelId}/{teacherId}")
-    void saveCourse(@RequestBody Course course , @PathVariable (name = "levelId") int levelId , @PathVariable (name = "teacherId") int teacherId){
-        courseService.saveCourse(course.getCourseName(), course.getDescriptions(), course.getImages(), course.getPayment(), levelId, teacherId);
+    @PostMapping("/saveCourse/{teacherId}")
+    void saveCourse(@RequestBody Course course , @PathVariable (name = "teacherId") int teacherId){
+        System.out.println(course.getLevel().getLevelId());
+        courseService.saveCourse(course.getCourseName(), course.getDescriptions(), course.getImages(), course.getPayment(), course.getLevel().getLevelId(), teacherId);
     }
 
     @GetMapping("/findCourse/{courseId}")
@@ -73,5 +74,10 @@ public class CourseController {
         courseUpdate.setLevel(course.getLevel());
         courseUpdate.setTeacher(teacher);
         courseService.updateCourse(courseUpdate);
+    }
+
+    @DeleteMapping("/deleteCourse/{courseId}")
+    void deleteCourse(@PathVariable (name = "courseId") int courseId){
+        courseService.deleteCourse(courseId);
     }
 }
