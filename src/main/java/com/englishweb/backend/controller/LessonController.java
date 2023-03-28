@@ -47,4 +47,9 @@ public class LessonController {
         lessonUpdate.setContent(lesson.getContent());
         lessonService.updateLesson(lessonUpdate);
     }
+
+    @GetMapping("/findLesson/{lessonId}")
+    Lesson findLessonById (@PathVariable (name = "lessonId") int lessonId){
+        return lessonService.findLessonById(lessonId);
+    }
 }

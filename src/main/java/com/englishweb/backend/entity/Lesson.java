@@ -39,7 +39,7 @@ public class Lesson {
     // getters and setters
 
     public int getLessonId() {
-        return lessonId;
+        return this.lessonId;
     }
 
     public void setLessonId(int lessonId) {
