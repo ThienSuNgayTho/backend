@@ -1,4 +1,9 @@
 package com.englishweb.backend.entity;
+import java.util.List;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -25,12 +30,14 @@ public class Course {
 
     @Column(name = "Payment")
     private Integer payment;
-
-    @ManyToOne
-    @JoinColumn(name = "TeacherId")
+    // Constructors, getters, and setters
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "TeacherId", referencedColumnName = "UserID")
     private User teacher;
 
-    // Constructors, getters, and setters
+    @OneToMany(mappedBy = "course", cascade = CascadeType.MERGE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Lesson> lessons;
 
     public Course() {
     }
