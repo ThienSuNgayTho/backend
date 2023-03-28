@@ -23,4 +23,9 @@ public class UserServiceImpl implements UserService {
     public List<User> findAll() {
       return userRepository.findAll();
     }
+
+    @Override
+    public User findUserById(int userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + userId));
+    }
 }
