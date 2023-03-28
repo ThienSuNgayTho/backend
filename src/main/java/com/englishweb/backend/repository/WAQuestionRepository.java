@@ -22,4 +22,7 @@ public interface WAQuestionRepository extends JpaRepository<WAQuestions, Long> {
 
     @Query(value = "SELECT * FROM questions WHERE question_id = ?1", nativeQuery = true)
     WAQuestions findQuestionsById(Long questionId);
+
+    @Query(value = "DELETE FROM questions WHERE question_id = ?1", nativeQuery = true)
+    void deleteQuestionsById(Long questionId);
 }

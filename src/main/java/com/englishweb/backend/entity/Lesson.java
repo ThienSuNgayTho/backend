@@ -1,5 +1,10 @@
 package com.englishweb.backend.entity;
 import jakarta.persistence.*;
+
+import java.util.List;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 @Entity
 public class Lesson {
 
@@ -14,9 +19,13 @@ public class Lesson {
     @Column(name = "Content")
     private String content;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "CourseId")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "CourseId", nullable = false)
     private Course course;
+
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<FlashCard> flashCard;
 
     // constructors, getters, and setters
 

@@ -22,6 +22,7 @@ public class WAOptions {
     @Column(name = "is_correct")
     private boolean isCorrect;
 
+
     // getters and setters
 
     public Long getId() {

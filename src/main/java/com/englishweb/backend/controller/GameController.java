@@ -21,55 +21,57 @@ public class GameController {
     GameService gameService;
 
     @GetMapping("/loadFlashCard")
-    List<FlashCard> loadFlashCard(){
+    List<FlashCard> loadFlashCard() {
         return gameService.findAll();
     }
 
     @GetMapping("/loadFlashCard/{lessonid}")
-    List<FlashCardDTO> loadFlashCardByLessonID(@PathVariable (name = "lessonid") int lessonId){
+    List<FlashCardDTO> loadFlashCardByLessonID(@PathVariable(name = "lessonid") int lessonId) {
         List<FlashCard> flashCards = gameService.findAllByLessonId(lessonId);
         List<FlashCardDTO> flashCardDTOs = new ArrayList<>();
         for (FlashCard flashCard : flashCards) {
-            flashCardDTOs.add(new FlashCardDTO(flashCard.getFlashCardId(), flashCard.getFrontHTML(), flashCard.getBackHTML(), flashCard.getLesson().getLessonId()));
+            flashCardDTOs.add(new FlashCardDTO(flashCard.getFlashCardId(), flashCard.getFrontHTML(),
+                    flashCard.getBackHTML(), flashCard.getLesson().getLessonId()));
         }
         return flashCardDTOs;
     }
-    
+
     @PostMapping("/saveFlashCard/{lessonId}")
-        void saveFlashCard(@PathVariable (name = "lessonId") int lessonId , @RequestBody FlashCard flashCard){
-            gameService.saveFlashCard(flashCard.getFrontHTML(), flashCard.getBackHTML(), lessonId);
-        }
-        
+    void saveFlashCard(@PathVariable(name = "lessonId") int lessonId, @RequestBody FlashCard flashCard) {
+        gameService.saveFlashCard(flashCard.getFrontHTML(), flashCard.getBackHTML(), lessonId);
+    }
+
     @GetMapping("/findFlashCard/{flashCardId}")
-    FlashCard findFlashCardById (@PathVariable (name = "flashCardId") Long flashCardId){
+    FlashCard findFlashCardById(@PathVariable(name = "flashCardId") Long flashCardId) {
         return gameService.findFlashCardById(flashCardId);
-    } 
-        
+    }
+
     @GetMapping("/findFlashCardByLessonId/{lessonId}")
-    List<FlashCardDTO> findFlashCardByLessonId (@PathVariable (name = "lessonId") int lessonId){
+    List<FlashCardDTO> findFlashCardByLessonId(@PathVariable(name = "lessonId") int lessonId) {
         List<FlashCard> flashCards = gameService.findAllByLessonId(lessonId);
         List<FlashCardDTO> flashCardDTOs = new ArrayList<>();
         for (FlashCard flashCard : flashCards) {
-            flashCardDTOs.add(new FlashCardDTO(flashCard.getFlashCardId(), flashCard.getFrontHTML(), flashCard.getBackHTML(), flashCard.getLesson().getLessonId()));
+            flashCardDTOs.add(new FlashCardDTO(flashCard.getFlashCardId(), flashCard.getFrontHTML(),
+                    flashCard.getBackHTML(), flashCard.getLesson().getLessonId()));
         }
         return flashCardDTOs;
     }
 
     @PutMapping("/updateFlashCard/{flashCardId}")
-        void updateFlashCard(@PathVariable (name = "flashCardId") Long flashCardId, @RequestBody FlashCard flashCard){
-            FlashCard flashCardToUpdate = gameService.findFlashCardById(flashCardId);
-            flashCardToUpdate.setFrontHTML(flashCard.getFrontHTML());
-            flashCardToUpdate.setBackHTML(flashCard.getBackHTML());
-            flashCardToUpdate.setLesson(flashCard.getLesson());
-            gameService.updateFlashCard(flashCardToUpdate);
-        }
-    
-    @DeleteMapping("/deleteFlashCard/{flashCardId}")
-        void deleteFlashCardById (@PathVariable (name = "flashCardId") Long flashCardId){
-            gameService.deleteFlashCardById(flashCardId);
-        }
+    void updateFlashCard(@PathVariable(name = "flashCardId") Long flashCardId, @RequestBody FlashCard flashCard) {
+        FlashCard flashCardToUpdate = gameService.findFlashCardById(flashCardId);
+        flashCardToUpdate.setFrontHTML(flashCard.getFrontHTML());
+        flashCardToUpdate.setBackHTML(flashCard.getBackHTML());
+        flashCardToUpdate.setLesson(flashCard.getLesson());
+        gameService.updateFlashCard(flashCardToUpdate);
+    }
 
-        @GetMapping("/word/{levelid}")
+    @DeleteMapping("/deleteFlashCard/{flashCardId}")
+    void deleteFlashCardById(@PathVariable(name = "flashCardId") Long flashCardId) {
+        gameService.deleteFlashCardById(flashCardId);
+    }
+
+    @GetMapping("/word/{levelid}")
     List<WADTO> loadWordByLevelID(@PathVariable(name = "levelid") Long levelId) {
         List<WAQuestions> wadto = gameService.findAllByLevelId(levelId);
         List<WADTO> WADTOs = new ArrayList<>();
@@ -81,6 +83,35 @@ public class GameController {
                             waop));
         }
         return WADTOs;
+    }
+
+    @PostMapping("/saveQuestions/{levelid}")
+    void saveQuestions(@PathVariable(name = "levelid") Long levelId, @RequestBody WADTO wadto) {
+        gameService.saveQuestions(levelId, null, levelId);
+    }
+
+    @PostMapping("/saveOptions/{questionid}")
+    void saveOptions(@PathVariable(name = "questionid") Long questionId, @RequestBody WADTO wadto) {
+        gameService.saveOptions(questionId, false, null, questionId);
+    }
+
+    @DeleteMapping("/deleteQuestionsById/{questionid}")
+    void deleteQuestionsById(@PathVariable(name = "questionid") Long questionId) {
+        gameService.deleteQuestionsById(questionId);
+    }
+
+    @PutMapping("/updateQuestions/{questionid}")
+    void updateQuestions(@PathVariable(name = "questionid") Long questionId, @RequestBody WAQuestions question) {
+        WAQuestions questionToUpdate = gameService.findQuestionsById(questionId);
+        questionToUpdate.setQuestionText(question.getQuestionText());
+        questionToUpdate.setLevelId(question.getLevelId());
+        gameService.updateQuestions(question);
+    }
+
+    @GetMapping("/findQuestionsById/{questionid}")
+    WAQuestions findQuestionsById(@PathVariable(name = "questionid") Long questionId) {
+        WAQuestions question = gameService.findQuestionsById(questionId);
+        return question;
     }
 
 }

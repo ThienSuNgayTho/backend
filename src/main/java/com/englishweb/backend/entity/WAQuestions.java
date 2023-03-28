@@ -1,6 +1,10 @@
 package com.englishweb.backend.entity;
 
+import java.util.List;
 import java.util.Set;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import jakarta.persistence.*;
 
@@ -18,6 +22,11 @@ public class WAQuestions {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "levelId")
     private Level levelId;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<WAOptions> option;
+    // getters and setters
     // getters and setters
 
     public WAQuestions() {
@@ -27,8 +36,6 @@ public class WAQuestions {
         this.question_id = question_id;
         this.questionText = questionText;
     }
-
-    // getters and setters
 
     public long getId() {
         return question_id;
