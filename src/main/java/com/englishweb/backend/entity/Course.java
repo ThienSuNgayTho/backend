@@ -31,11 +31,11 @@ public class Course {
     @Column(name = "Payment")
     private Integer payment;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "TeacherId", referencedColumnName = "UserID", nullable = false)
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "TeacherId", referencedColumnName = "UserID")
     private User teacher;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.MERGE)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Lesson> lessons;
 
