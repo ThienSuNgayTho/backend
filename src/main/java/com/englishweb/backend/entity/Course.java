@@ -1,14 +1,19 @@
 package com.englishweb.backend.entity;
+
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "Course")
 public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CourseID")
-    private Integer courseID;
+    private int courseID;
 
     @Column(name = "CourseName")
     private String courseName;
@@ -24,10 +29,13 @@ public class Course {
     private String images;
 
     @Column(name = "Payment")
-    private Integer payment;
+    private int payment;
+
+    @Column(name = "PublicId")
+    private String pid;
 
     @ManyToOne
-    @JoinColumn(name = "UserId")
+    @JoinColumn(name = "TeacherId")
     private User teacher;
 
     // Constructors, getters, and setters
@@ -35,72 +43,15 @@ public class Course {
     public Course() {
     }
 
-    public Course(String courseName, String descriptions, Level level, String images, Integer payment, User teacher) {
+    public Course(String courseName, String descriptions, Level level, String images, int payment, String pid,
+            User teacher) {
         this.courseName = courseName;
         this.descriptions = descriptions;
         this.level = level;
         this.images = images;
         this.payment = payment;
-        this.teacher = teacher;
-    }
-
-    // Getters and setters
-
-    public Integer getCourseID() {
-        return courseID;
-    }
-
-    public void setCourseID(Integer courseID) {
-        this.courseID = courseID;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public String getDescriptions() {
-        return descriptions;
-    }
-
-    public void setDescriptions(String descriptions) {
-        this.descriptions = descriptions;
-    }
-
-    public Level getLevel() {
-        return level;
-    }
-
-    public void setLevel(Level level) {
-        this.level = level;
-    }
-
-    public String getImages() {
-        return images;
-    }
-
-    public void setImages(String images) {
-        this.images = images;
-    }
-
-    public Integer getPayment() {
-        return payment;
-    }
-
-    public void setPayment(Integer payment) {
-        this.payment = payment;
-    }
-
-    public User getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(User teacher) {
+        this.pid = pid;
         this.teacher = teacher;
     }
 
 }
-

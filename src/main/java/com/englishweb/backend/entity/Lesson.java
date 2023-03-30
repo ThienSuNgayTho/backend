@@ -30,7 +30,7 @@ public class Lesson {
 
     // getters and setters
 
-    public int getLessonId(int lessonId) {
+    public int getLessonId() {
         return this.lessonId;
     }
 
