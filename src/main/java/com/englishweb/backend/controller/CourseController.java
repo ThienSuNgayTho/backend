@@ -124,4 +124,11 @@ public class CourseController {
         }
         courseService.updateCourse(courseUpdate);
     }
+
+    @DeleteMapping("/deleteCourse/{courseId}")
+    void deleteCourse(@PathVariable (name = "courseId") int courseId) throws IOException{
+        Course courseUpdate = courseService.findCourseById(courseId);
+        cloudinaryService.deleteImage(courseUpdate.getPid());
+        courseService.deleteCourse(courseId);
+    }
 }
