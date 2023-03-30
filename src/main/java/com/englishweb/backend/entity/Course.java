@@ -4,6 +4,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Getter
 @Setter
@@ -34,9 +39,13 @@ public class Course {
     @Column(name = "PublicId")
     private String pid;
 
-    @ManyToOne
-    @JoinColumn(name = "TeacherId")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "TeacherId", referencedColumnName = "UserID", nullable = false)
     private User teacher;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Lesson> lessons;
 
     // Constructors, getters, and setters
 
