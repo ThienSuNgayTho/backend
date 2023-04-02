@@ -6,7 +6,7 @@ import com.englishweb.backend.entity.Course;
 
 public interface CourseService {
     
-    void saveCourse(String courseName, String courseDescription, String courseImage, int payment, int levelId, String pid, int teacherId);
+    void saveCourse(String courseName, String courseDescription, String courseImage, int payment, int levelId, String pid, int teacherId, int topicId);
         
     Course findCourseById(int courseId);
 

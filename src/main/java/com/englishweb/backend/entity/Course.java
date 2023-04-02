@@ -26,7 +26,7 @@ public class Course {
     @Column(name = "Descriptions")
     private String descriptions;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "LevelID")
     private Level level;
 
@@ -43,9 +43,13 @@ public class Course {
     @JoinColumn(name = "TeacherId", referencedColumnName = "UserID", nullable = false)
     private User teacher;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.MERGE)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Lesson> lessons;
+
+    @ManyToOne (cascade = CascadeType.ALL)
+    @JoinColumn(name = "TopicID", nullable = false)
+    private Topic topic;    
 
     // Constructors, getters, and setters
 
@@ -53,7 +57,7 @@ public class Course {
     }
 
     public Course(String courseName, String descriptions, Level level, String images, int payment, String pid,
-            User teacher) {
+            User teacher, Topic topic) {
         this.courseName = courseName;
         this.descriptions = descriptions;
         this.level = level;
@@ -61,6 +65,7 @@ public class Course {
         this.payment = payment;
         this.pid = pid;
         this.teacher = teacher;
+        this.topic = topic;
     }
 
 }
