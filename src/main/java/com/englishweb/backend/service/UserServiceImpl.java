@@ -3,7 +3,6 @@ package com.englishweb.backend.service;
 import com.englishweb.backend.entity.User;
 import com.englishweb.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,11 +24,6 @@ public class UserServiceImpl implements UserService {
       return userRepository.findAll();
     }
 
-    @Override
-    public User findUserById(int userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + userId));
-    }
-
     // @Override
     // public boolean checkUser(String username, String password) {
     //   User user = userRepository.getUserByUsername(username, password);
@@ -39,4 +33,8 @@ public class UserServiceImpl implements UserService {
     // }
 
     
+    @Override
+    public User findUserById(int userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + userId));
+    }
 }

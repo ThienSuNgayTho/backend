@@ -1,43 +1,43 @@
-package com.englishweb.backend.service;
+// package com.englishweb.backend.service;
 
-import java.util.List;
-import java.util.Optional;
+// import java.util.List;
+// import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.stereotype.Service;
+// import org.springframework.transaction.annotation.Transactional;
 
-import com.englishweb.backend.entity.Image;
-import com.englishweb.backend.repository.ImageRepository;
+// import com.englishweb.backend.entity.Image;
+// import com.englishweb.backend.repository.ImageRepository;
 
-@Service
-@Transactional
-public class ImageService {
+// @Service
+// @Transactional
+// public class ImageService {
 	
-	@Autowired
-	public ImageRepository imageRepository;
+// 	@Autowired
+// 	public ImageRepository imageRepository;
 	
-	public List<Image> list() {
-		return imageRepository.findAll();
-	}
+// 	public List<Image> list() {
+// 		return imageRepository.findAll();
+// 	}
 
-	public List<Image> listId(int courseid) {
-		return imageRepository.findByOrderById(courseid);
-	}
+// 	public List<Image> listId(int courseid) {
+// 		return imageRepository.findByOrderById(courseid);
+// 	}
 	
-	public void delete(int id) {
-		imageRepository.deleteById(id);
-	}
+// 	public void delete(int id) {
+// 		imageRepository.deleteById(id);
+// 	}
 	
-	public void save(Image image) {
-		imageRepository.save(image);
-	}
+// 	public void save(Image image) {
+// 		imageRepository.save(image);
+// 	}
 	
-	public Optional<Image> getOne(int id) {
-		return imageRepository.findById(id);
-	}
+// 	public Optional<Image> getOne(int id) {
+// 		return imageRepository.findById(id);
+// 	}
 	
-	public boolean exists(int id) {
-		return imageRepository.existsById(id);
-	}
-}
+// 	public boolean exists(int id) {
+// 		return imageRepository.existsById(id);
+// 	}
+// }

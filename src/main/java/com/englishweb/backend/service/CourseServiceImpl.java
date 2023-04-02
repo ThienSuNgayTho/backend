@@ -13,19 +13,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class CourseServiceImpl implements CourseService {
-    
+
     @Autowired
     CourseRepository courseRepository;
 
     @Transactional
     @Override
-    public void saveCourse(String courseName, String courseDescription, String courseImage, int payment, int levelId, int teacherId) {
-        courseRepository.saveCourse(courseName, courseDescription, courseImage, payment, levelId, teacherId);
+    public void saveCourse(String courseName, String courseDescription, String courseImage, int payment,
+            int levelId, String pid, int teacherId, int topicId) {
+        courseRepository.saveCourse(courseName, courseDescription, courseImage, payment, levelId, pid, teacherId, topicId);
+        // courseRepository.saveAndFlush(course);
     }
 
     @Override
     public Course findCourseById(int courseId) {
-        return courseRepository.findById(courseId).orElseThrow(() -> new IllegalArgumentException("Invalid course Id:" + courseId));
+        return courseRepository.findCourseById(courseId);
     }
 
     @Override
@@ -48,8 +50,17 @@ public class CourseServiceImpl implements CourseService {
         courseRepository.save(course);
     }
 
+    @Transactional
     @Override
     public void deleteCourse(int courseId) {
-        courseRepository.deleteById(courseId);
+        courseRepository.deleteFullCourse(courseId);       
     }
+
+    // @Override
+    // public void saveCourse(String courseName, String courseDescription, String
+    // courseImage, int payment, int levelId,
+    // int teacherId) {
+    // // TODO Auto-generated method stub
+    // throw new UnsupportedOperationException("Unimplemented method 'saveCourse'");
+    // }
 }
