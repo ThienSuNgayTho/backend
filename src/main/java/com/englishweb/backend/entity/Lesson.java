@@ -33,11 +33,10 @@ public class Lesson {
 
     public Lesson() {}
 
-    public Lesson(String lessonName, String content, String pdfFile, Course course) {
+    public Lesson(String lessonName, String content, Course course) {
         this.lessonName = lessonName;
         this.content = content;
         this.course = course;
-        this.pdfFile = pdfFile;
     }
 
     // getters and setters
@@ -72,13 +71,5 @@ public class Lesson {
 
     public void setCourse(Course course) {
         this.course = course;
-    }
-
-    public String getPdfFile() {
-        return pdfFile;
-    }
-
-    public void setPdfFile(String pdfFile) {
-        this.pdfFile = pdfFile;
     }
 }
