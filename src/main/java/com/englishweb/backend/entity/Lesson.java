@@ -22,7 +22,7 @@ public class Lesson {
     @Column(name = "pdf_file")
     private String pdfFile;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "CourseId", nullable = false)
     private Course course;
 
