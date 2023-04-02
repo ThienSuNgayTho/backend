@@ -8,12 +8,13 @@ public class CourseDTO {
     private Integer payment;
     private Integer levelId;
     private Integer teacherId;
+    private Integer topicId;
 
     public CourseDTO() {
     }
 
     public CourseDTO(Integer courseID, String courseName, String descriptions, String images, Integer payment,
-            Integer levelId, Integer teacherId) {
+            Integer levelId, Integer teacherId, Integer topicId) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.descriptions = descriptions;
@@ -21,6 +22,7 @@ public class CourseDTO {
         this.payment = payment;
         this.levelId = levelId;
         this.teacherId = teacherId;
+        this.topicId = topicId;
     }
 
     public Integer getCourseID() {
@@ -77,5 +79,13 @@ public class CourseDTO {
 
     public void setTeacherId(Integer teacherId) {
         this.teacherId = teacherId;
+    }
+
+    public Integer getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(Integer topicId) {
+        this.topicId = topicId;
     }
 }

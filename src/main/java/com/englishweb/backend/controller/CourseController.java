@@ -14,10 +14,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.englishweb.backend.entity.Course;
 import com.englishweb.backend.entity.CourseDTO;
 import com.englishweb.backend.entity.Level;
+import com.englishweb.backend.entity.Topic;
 import com.englishweb.backend.entity.User;
 import com.englishweb.backend.repository.CourseRepository;
+import com.englishweb.backend.repository.TopicRepository;
 import com.englishweb.backend.service.CloudinaryService;
 import com.englishweb.backend.service.CourseService;
+import com.englishweb.backend.service.TopicService;
 // import com.englishweb.backend.service.ImageService;
 import com.englishweb.backend.service.UserService;
 
@@ -34,6 +37,9 @@ public class CourseController {
     @Autowired
     CloudinaryService cloudinaryService;
 
+    @Autowired
+    TopicService topicService;
+
     // @Autowired
     // ImageService imageService;
 
@@ -46,18 +52,23 @@ public class CourseController {
             @RequestParam("descriptions") String descriptions,
             @RequestParam("payment") int payment,
             @RequestParam("levelId") int levelId,
+            @RequestParam("topicId") int topicId,
             @RequestPart("multipartFile") MultipartFile multipartFile,
             @PathVariable(name = "teacherId") int teacherId) throws IOException {
         Map result = cloudinaryService.uploadImage(multipartFile);
         courseService.saveCourse(courseName, descriptions, (String) result.get("url"), payment, levelId,
-                (String) result.get("public_id"), teacherId);
+                (String) result.get("public_id"), teacherId, topicId);
         courseRepository.flush();
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/findCourse/{courseId}")
-    Course findCourseById(@PathVariable(name = "courseId") int courseId) {
-        return courseService.findCourseById(courseId);
+    CourseDTO findCourseById(@PathVariable(name = "courseId") int courseId) {
+       Course course = courseService.findCourseById(courseId);
+        CourseDTO courseDTO = new CourseDTO(course.getCourseID(), course.getCourseName(), course.getDescriptions(),
+                course.getImages(), course.getPayment(), course.getLevel().getLevelId(),
+                course.getTeacher().getUserId(), course.getTopic().getTopicId());
+        return courseDTO;     
     }
 
     @GetMapping("/findCourseByTeacherId/{teacherId}")
@@ -67,7 +78,7 @@ public class CourseController {
         for (Course course : courses) {
             courseDTOs.add(new CourseDTO(course.getCourseID(), course.getCourseName(), course.getDescriptions(),
                     course.getImages(), course.getPayment(), course.getLevel().getLevelId(),
-                    course.getTeacher().getUserId()));
+                    course.getTeacher().getUserId(), course.getTopic().getTopicId()));
         }
         return courseDTOs;
     }
@@ -79,7 +90,7 @@ public class CourseController {
         for (Course course : courses) {
             courseDTOs.add(new CourseDTO(course.getCourseID(), course.getCourseName(), course.getDescriptions(),
                     course.getImages(), course.getPayment(), course.getLevel().getLevelId(),
-                    course.getTeacher().getUserId()));
+                    course.getTeacher().getUserId(), course.getTopic().getTopicId()));
         }
         return courseDTOs;
     }
@@ -91,7 +102,7 @@ public class CourseController {
         for (Course course : courses) {
             courseDTOs.add(new CourseDTO(course.getCourseID(), course.getCourseName(), course.getDescriptions(),
                     course.getImages(), course.getPayment(), course.getLevel().getLevelId(),
-                    course.getTeacher().getUserId()));
+                    course.getTeacher().getUserId(), course.getTopic().getTopicId()));
         }
         return courseDTOs;
     }
@@ -102,6 +113,7 @@ public class CourseController {
             @RequestParam("descriptions") String descriptions,
             @RequestParam("payment") int payment,
             @RequestParam("levelId") int levelId,
+            @RequestParam("topicId") int topicId,
             @RequestParam(value = "multipartFile", required = false) MultipartFile multipartFile,
             @PathVariable(name = "courseId") int courseId,
             @PathVariable(name = "teacherId") int teacherId) throws IOException {
@@ -109,6 +121,7 @@ public class CourseController {
         // System.out.println("image"+courseUpdate.getImages());
         User teacher = userService.findUserById(teacherId);
         Level level = new Level();
+        Topic topic = topicService.findTopicById(topicId);
         level.setLevelId(levelId);
 
         courseUpdate.setCourseName(courseName);
@@ -116,6 +129,7 @@ public class CourseController {
         courseUpdate.setPayment(payment);
         courseUpdate.setLevel(level);
         courseUpdate.setTeacher(teacher);
+        courseUpdate.setTopic(topic);
         if (multipartFile != null) {
             Map result = cloudinaryService.deleteImage(courseUpdate.getPid());
             result = cloudinaryService.uploadImage(multipartFile);
