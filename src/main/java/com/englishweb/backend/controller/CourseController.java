@@ -26,6 +26,10 @@ public class CourseController {
     void saveCourse(@RequestBody Course course , @PathVariable (name = "teacherId") int teacherId){
         System.out.println(course.getLevel().getLevelId());
         courseService.saveCourse(course.getCourseName(), course.getDescriptions(), course.getImages(), course.getPayment(), course.getLevel().getLevelId(), teacherId);
+    @PostMapping("/saveCourse/{teacherId}")
+    void saveCourse(@RequestBody Course course , @PathVariable (name = "teacherId") int teacherId){
+        System.out.println(course.getLevel().getLevelId());
+        courseService.saveCourse(course.getCourseName(), course.getDescriptions(), course.getImages(), course.getPayment(), course.getLevel().getLevelId(), teacherId);
     }
 
     @GetMapping("/findCourse/{courseId}")
@@ -80,6 +84,4 @@ public class CourseController {
     void deleteCourse(@PathVariable (name = "courseId") int courseId){
         courseService.deleteCourse(courseId);
     }
-
-    
 }

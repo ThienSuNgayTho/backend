@@ -48,8 +48,9 @@ public class CourseServiceImpl implements CourseService {
         courseRepository.save(course);
     }
 
+    @Transactional
     @Override
     public void deleteCourse(int courseId) {
-        courseRepository.deleteById(courseId);
+        courseRepository.deleteFullCourse(courseId);       
     }
 }

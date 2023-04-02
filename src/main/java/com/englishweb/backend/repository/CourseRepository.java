@@ -17,6 +17,12 @@ public interface CourseRepository extends JpaRepository<Course, Integer > {
     List<Course> findCourseByLevelId(int levelId);
 
     @Modifying
+    @Query(value = "DELETE FROM course WHERE courseid = ?1", nativeQuery = true)
+    void deleteFullCourse(int courseId);
+
+    @Modifying
     @Query(value = "INSERT INTO course (course_name, descriptions, images, payment, levelid, teacher_id) VALUES (?1, ?2, ?3,?4,?5,?6)", nativeQuery = true)
     void saveCourse(String courseName, String descriptions, String images, int payment, int levelId, int teacherId);
+
+
 }
