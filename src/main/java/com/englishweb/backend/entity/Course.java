@@ -1,10 +1,10 @@
 package com.englishweb.backend.entity;
-import jakarta.persistence.*;
-
 import java.util.List;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Course")
@@ -30,7 +30,7 @@ public class Course {
 
     @Column(name = "Payment")
     private Integer payment;
-
+    // Constructors, getters, and setters
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "TeacherId", referencedColumnName = "UserID")
     private User teacher;
@@ -38,8 +38,6 @@ public class Course {
     @OneToMany(mappedBy = "course", cascade = CascadeType.MERGE)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Lesson> lessons;
-
-    // Constructors, getters, and setters
 
     public Course() {
     }

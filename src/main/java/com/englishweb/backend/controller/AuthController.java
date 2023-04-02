@@ -68,7 +68,7 @@ public class AuthController {
         user.setLevel(signUpDto.getLevel());
 
         Role roles = roleRepository.findByRoleName("Admin").get();
-        user.setRoles(Collections.singleton(roles));
+        user.setRole(Collections.singleton(roles));
 
         userRepository.save(user);
 
