@@ -20,6 +20,7 @@ public interface CourseRepository extends JpaRepository<Course, Integer> {
     @Query(value = "DELETE FROM course WHERE courseid = ?1", nativeQuery = true)
     void deleteFullCourse(int courseId);
 
+    @Modifying
     @Query(value = "INSERT INTO course (course_name, descriptions, images, payment, levelid, public_id, teacher_id) VALUES (?1,?2,?3,?4,?5,?6,?7)", nativeQuery = true)
     void saveCourse(String courseName, String descriptions, String images, int payment,  int levelId, String pid, int teacherId);
 }
