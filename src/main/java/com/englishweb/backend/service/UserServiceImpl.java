@@ -38,38 +38,5 @@ public class UserServiceImpl implements UserService {
     //   } else return true;
     // }
 
-    @Override
-    public User addUser(User user) {
-        return userRepository.save(user);
-    }
-
-    @Override
-    public User getUserByUsername(String username) {
-        return userRepository.getUserByUsername(username);
-    }
-
-    @Override
-    public User getUserByUsernameAndPassword(String username, String password) {
-        return userRepository.getUserByUsernameAndPassword(username, password);
-    }
-
-    @Override
-    public User getUserById(int id) {
-        return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-    }
-
-    @Override
-    public User updateUser(User user) {
-        return userRepository.save(user);
-    }
-
-    @Override
-    public void deleteUser(int id) {
-        userRepository.deleteById(id);
-    }
-
-    @Override
-    public User getUserByEmail(String email) {
-        return userRepository.getUserByEmail(email);
-    }
+    
 }
