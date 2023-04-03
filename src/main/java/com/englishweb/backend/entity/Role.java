@@ -1,41 +1,51 @@
 package com.englishweb.backend.entity;
+import org.hibernate.annotations.ManyToAny;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Roles")
 public class Role {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "RoleID")
-    private int roleId;
+    private int id;
 
-    @Column(name = "RoleName")
-    private String roleName;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private ERole name;
 
-	public int getRoleId() {
-		return roleId;
-	}
+    public Role() {
 
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
-	}
-
-	public String getRoleName() {
-		return roleName;
-	}
-
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-
-    // constructors, getters, and setters
+    }
+  
+    public Role(ERole name) {
+      this.name = name;
+    }
+  
+    public Integer getId() {
+      return id;
+    }
+  
+    public void setId(Integer id) {
+      this.id = id;
+    }
+  
+    public ERole getName() {
+      return name;
+    }
+  
+    public void setName(ERole name) {
+      this.name = name;
+    }
     
 }
