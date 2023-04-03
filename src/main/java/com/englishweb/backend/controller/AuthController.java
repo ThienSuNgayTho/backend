@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.englishweb.backend.entity.LoginDTO;
 import com.englishweb.backend.entity.RegisterDTO;
 import com.englishweb.backend.entity.Role;
@@ -29,6 +28,8 @@ import com.englishweb.backend.repository.UserRepository;
 @CrossOrigin
 public class AuthController {
 
+    // @Autowired
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -40,16 +41,6 @@ public class AuthController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @PostMapping("/signin")
-    public ResponseEntity<String> authenticateUser(@RequestBody LoginDTO loginDto){
-        System.out.println(loginDto.getUsernameOrEmail());
-        System.out.println(loginDto.getPassword());
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                loginDto.getUsernameOrEmail(), loginDto.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new ResponseEntity<>("User signed-in successfully!.", HttpStatus.OK);
-    }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody RegisterDTO signUpDto){
@@ -77,7 +68,7 @@ public class AuthController {
         user.setLevel(signUpDto.getLevel());
 
         Role roles = roleRepository.findByRoleName("Admin").get();
-        user.setRoles(Collections.singleton(roles));
+
 
         userRepository.save(user);
 

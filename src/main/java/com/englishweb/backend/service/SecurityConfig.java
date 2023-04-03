@@ -35,6 +35,10 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
+    public UserDetailsService userDetailsService(){
+        return userDetailsService;
+    }
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
