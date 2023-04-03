@@ -38,8 +38,8 @@ public class Course {
     @Column(name = "PID")
     private String pid;
 
-    @ManyToOne
-    @JoinColumn(name = "TeacherId")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "TeacherId", referencedColumnName = "UserID")
     private User teacher;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.MERGE)
