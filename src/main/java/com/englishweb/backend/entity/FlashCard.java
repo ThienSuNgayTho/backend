@@ -17,7 +17,7 @@ public class FlashCard {
     public Long getFlashCardId() {
         return flashCardId;
     }
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.MERGE)
     @JoinColumn(name = "LessonID")
     private Lesson lesson;
 

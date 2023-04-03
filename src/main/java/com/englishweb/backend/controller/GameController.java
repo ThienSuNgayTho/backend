@@ -20,6 +20,7 @@ public class GameController {
     @Autowired
     GameService gameService;
 
+    // FlashCard Game
     @GetMapping("/loadFlashCard")
     List<FlashCard> loadFlashCard() {
         return gameService.findAll();
@@ -71,28 +72,25 @@ public class GameController {
         gameService.deleteFlashCardById(flashCardId);
     }
 
-    @GetMapping("/word/{levelid}")
-    List<WADTO> loadWordByLevelID(@PathVariable(name = "levelid") Long levelId) {
-        List<WAQuestions> wadto = gameService.findAllByLevelId(levelId);
+    // Word Association Game
+    @GetMapping("/word/{lessonid}")
+    List<WADTO> loadWordByLessonID(@PathVariable(name = "lessonid")  int lessonId) {
+        List<WAQuestions> wadto = gameService.findAllByLessonId2(lessonId);
         List<WADTO> WADTOs = new ArrayList<>();
 
         for (WAQuestions waQuestion : wadto) {
             List<WAOptions> waop = gameService.findByQuestion(waQuestion.getId());
             WADTOs.add(
                     new WADTO(waQuestion.getId(), waQuestion.getQuestionText(),
-                            waop));
+                            waop, waQuestion.getLesson().getLessonId()));
         }
         return WADTOs;
     }
 
-    @PostMapping("/saveQuestions/{levelid}")
-    void saveQuestions(@PathVariable(name = "levelid") Long levelId, @RequestBody WADTO wadto) {
-        gameService.saveQuestions(levelId, null, levelId);
-    }
-
-    @PostMapping("/saveOptions/{questionid}")
-    void saveOptions(@PathVariable(name = "questionid") Long questionId, @RequestBody WADTO wadto) {
-        gameService.saveOptions(questionId, false, null, questionId);
+    // ------------------------Questions--------------------------------
+    @PostMapping("/saveQuestions/{lessonid}")
+    void saveQuestions(@PathVariable(name = "lessonid")  int lessonId, @RequestBody WADTO wadto) {
+        gameService.saveQuestions( wadto.getQuestionText(), lessonId);
     }
 
     @DeleteMapping("/deleteQuestionsById/{questionid}")
@@ -104,8 +102,8 @@ public class GameController {
     void updateQuestions(@PathVariable(name = "questionid") Long questionId, @RequestBody WAQuestions question) {
         WAQuestions questionToUpdate = gameService.findQuestionsById(questionId);
         questionToUpdate.setQuestionText(question.getQuestionText());
-        questionToUpdate.setLevelId(question.getLevelId());
-        gameService.updateQuestions(question);
+        questionToUpdate.setLesson(question.getLesson());
+        gameService.updateQuestions(questionToUpdate);
     }
 
     @GetMapping("/findQuestionsById/{questionid}")
@@ -114,4 +112,36 @@ public class GameController {
         return question;
     }
 
+    // ------------------------Options--------------------------------
+    @PostMapping("/saveOptions/{questionid}")
+    void saveOptions(@PathVariable(name = "questionid") Long questionId, @RequestBody WAOptions options) {
+        gameService.saveOptions(questionId, options.getIsCorrect(), options.getOptionText() , questionId);
+    }
+
+    @DeleteMapping("/deleteOptionsById/{optionid}")
+    void deleteOptionsById(@PathVariable(name = "optionid") Long optionId) {
+        gameService.deleteOptionsById(optionId);
+    }
+
+    @GetMapping("/findOptionsByQuestionId/{questionid}")
+    List<WAOptions> findOptionsByQuestionId(@PathVariable(name = "questionid") Long questionId) {
+        List<WAOptions> options = gameService.findByQuestion(questionId);
+        return options;
+    }
+
+    @GetMapping("/findOptionsByOptionId/{optionid}")
+    WAOptions findOptionsByOptionId(@PathVariable(name = "optionid") Long optionId) {
+        return gameService.findOptionsByOptionId(optionId);
+
+    }
+
+    @PutMapping("/updateOptions/{optionid}")
+    void updateOptions(@PathVariable(name = "optionid") Long optionId, @RequestBody WAOptions option) {
+        WAOptions optionToUpdate = gameService.findOptionsByOptionId(optionId);
+        optionToUpdate.setOptionText(option.getOptionText());
+        optionToUpdate.setIsCorrect(option.getIsCorrect());
+        // optionToUpdate.setQuestionId(option.getQuestionId());
+        gameService.updateOptions(option);
+
+    }
 }

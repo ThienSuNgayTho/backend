@@ -20,8 +20,10 @@ public class WAQuestions {
     private String questionText;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "levelId")
-    private Level levelId;
+    @JoinColumn(name = "LessonID")
+    private Lesson lesson;
+    // @JoinColumn(name ="LessonName")
+    // private Lesson lessonName;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -53,12 +55,20 @@ public class WAQuestions {
         this.questionText = questionText;
     }
 
-    public Level getLevelId() {
-        return levelId;
+    public Lesson getLesson() {
+        return lesson;
     }
 
-    public void setLevelId(Level levelId) {
-        this.levelId = levelId;
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
     }
+
+    // public Lesson getLessonName() {
+    // return lessonName;
+    // }
+
+    // public void setLessonName(Lesson lessonName) {
+    // this.lessonName = lessonName;
+    // }
 
 }

@@ -22,15 +22,14 @@ public class WAOptions {
     @Column(name = "is_correct")
     private boolean isCorrect;
 
-
     // getters and setters
 
     public Long getId() {
         return option_id;
     }
 
-    public void setId(long Id) {
-        Id = Id;
+    public void setId(long option_id) {
+        this.option_id = option_id;
     }
 
     public String getOptionText() {
@@ -41,11 +40,11 @@ public class WAOptions {
         this.optionText = optionText;
     }
 
-    public boolean isCorrect() {
+    public boolean getIsCorrect() {
         return isCorrect;
     }
 
-    public void setCorrect(boolean iscorrect) {
-        isCorrect = iscorrect;
+    public void setIsCorrect(boolean isCorrect) {
+        this.isCorrect = isCorrect;
     }
 }

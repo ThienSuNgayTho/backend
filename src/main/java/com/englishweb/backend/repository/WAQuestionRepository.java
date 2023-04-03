@@ -11,14 +11,14 @@ import com.englishweb.backend.entity.WAQuestions;
 
 public interface WAQuestionRepository extends JpaRepository<WAQuestions, Long> {
 
-    @Query(value = "SELECT * FROM questions WHERE level_id = ?1", nativeQuery = true)
-    List<WAQuestions> findAllByLevelId(Long levelid);
+    @Query(value = "SELECT * FROM questions WHERE lessonid = ?1", nativeQuery = true)
+    List<WAQuestions> findAllByLessonId2(int lessonid);
 
     List<WAQuestions> findAll();
 
     @Modifying
-    @Query(value = "INSERT INTO questions (question_id, question_text, level_id) VALUES (?1, ?2, ?3)", nativeQuery = true)
-    void saveQuestions(Long questionId, String questionText, Long levelId);
+    @Query(value = "INSERT INTO questions ( question_text, lessonid) VALUES (?1, ?2)", nativeQuery = true)
+    void saveQuestions(String questionText, int lessonid);
 
     @Query(value = "SELECT * FROM questions WHERE question_id = ?1", nativeQuery = true)
     WAQuestions findQuestionsById(Long questionId);

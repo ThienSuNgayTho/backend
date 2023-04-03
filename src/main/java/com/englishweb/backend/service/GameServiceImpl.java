@@ -1,9 +1,13 @@
 package com.englishweb.backend.service;
 
+import java.util.List;
+
+import com.englishweb.backend.entity.FillInBlank;
 import com.englishweb.backend.entity.FlashCard;
 import com.englishweb.backend.entity.WADTO;
 import com.englishweb.backend.entity.WAOptions;
 import com.englishweb.backend.entity.WAQuestions;
+import com.englishweb.backend.repository.FillInBlankRepository;
 import com.englishweb.backend.repository.FlashCardRepository;
 import com.englishweb.backend.repository.WAOptionRepository;
 import com.englishweb.backend.repository.WAQuestionRepository;
@@ -12,9 +16,6 @@ import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -27,7 +28,10 @@ public class GameServiceImpl implements GameService {
 
     @Autowired
     private WAOptionRepository optionRepository;
+    @Autowired
+    FillInBlankRepository fillInBlankRepository;
 
+    // FlashCard Game
     @Override
     public List<FlashCard> findAll() {
         return flashCardRepository.findAll();
@@ -36,21 +40,6 @@ public class GameServiceImpl implements GameService {
     @Override
     public List<FlashCard> findAllByLessonId(int lessonid) {
         return flashCardRepository.findAllByLessonId(lessonid);
-    }
-
-    @Override
-    public List<WAQuestions> getAllQuestions() {
-        return questionRepository.findAll();
-    }
-
-    @Override
-    public List<WAQuestions> findAllByLevelId(Long levelid) {
-        return questionRepository.findAllByLevelId(levelid);
-    }
-
-    @Override
-    public List<WAOptions> findByQuestion(Long questionid) {
-        return optionRepository.findByQuestion(questionid);
     }
 
     @Transactional
@@ -76,16 +65,51 @@ public class GameServiceImpl implements GameService {
         flashCardRepository.save(flashCard);
     }
 
-    @Transactional
+    // ------------------------------------------------
+    // Fill In Blank Game
     @Override
-    public void saveQuestions(Long questionId, String questionText, Long levelId) {
-        questionRepository.saveQuestions(questionId, questionText, levelId);
+    public List<FillInBlank> findAllByLevelId(Long levelid) {
+        return fillInBlankRepository.findAllByLevelId(levelid);
+    }
+
+    @Override
+    public List<FillInBlank> findAllFillInBlank() {
+        return fillInBlankRepository.findAll();
+    }
+
+    @Override
+    public void saveFillInBlank(FillInBlank fillInBlank) {
+        fillInBlankRepository.save(fillInBlank);
+    }
+
+    @Override
+    public void deleteFillInBlank(Long id) {
+        fillInBlankRepository.deleteById(id);
+    }
+
+    @Override
+    public FillInBlank findFillInBlanksById(Long id) {
+        return fillInBlankRepository.findById(id).orElseThrow(() -> new RuntimeException("FillInBlank not found"));
     }
 
     @Transactional
     @Override
-    public void saveOptions(Long optionId, boolean isCorrect, String optionText, Long questionId) {
-        optionRepository.saveOptions(optionId, isCorrect, optionText, questionId);
+    public void saveFillInBlankByLevel(String question, String answer, Long levelId) {
+        fillInBlankRepository.saveFillInBlankByLevel(question, answer, levelId);
+    }
+
+    @Override
+    public List<FillInBlank> findAllFillInBlanksByLevelId(Long levelId) {
+        return fillInBlankRepository.findAllFillInBlanksByLevelId(levelId);
+    }
+
+    // ------------------------------------------------
+    // Word Association Game
+    // Questions
+    @Transactional
+    @Override
+    public void saveQuestions(String questionText, int lessonid) {
+        questionRepository.saveQuestions( questionText, lessonid);
     }
 
     @Override
@@ -98,10 +122,49 @@ public class GameServiceImpl implements GameService {
         return questionRepository.findById(questionId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid question Id:" + questionId));
     }
-    
+
     @Override
     public void updateQuestions(WAQuestions question) {
         questionRepository.save(question);
     }
- 
+
+    @Override
+    public List<WAQuestions> getAllQuestions() {
+        return questionRepository.findAll();
+    }
+
+    @Override
+    public List<WAQuestions> findAllByLessonId2(int lessonid) {
+        return questionRepository.findAllByLessonId2(lessonid);
+    }
+
+    // ------------------------------------------------
+    // Options
+    @Transactional
+    @Override
+    public void saveOptions(Long optionId, boolean isCorrect, String optionText, Long questionId) {
+        optionRepository.saveOptions(optionId, isCorrect, optionText, questionId);
+    }
+
+    @Override
+    public WAOptions findOptionsByOptionId(Long optionId) {
+        return optionRepository.findById(optionId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid option Id:" + optionId));
+    }
+
+    @Override
+    public List<WAOptions> findByQuestion(Long questionid) {
+        return optionRepository.findByQuestion(questionid);
+    }
+
+    @Override
+    public void deleteOptionsById(Long optionId) {
+        optionRepository.deleteById(optionId);
+    }
+
+    @Override
+    public void updateOptions(WAOptions option) {
+        optionRepository.save(option);
+    }
+
 }

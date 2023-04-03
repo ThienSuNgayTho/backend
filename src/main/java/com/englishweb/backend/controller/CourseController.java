@@ -79,5 +79,9 @@ public class CourseController {
     @DeleteMapping("/deleteCourse/{courseId}")
     void deleteCourse(@PathVariable (name = "courseId") int courseId){
         courseService.deleteCourse(courseId);
+    
+   
     }
 }
+
+    

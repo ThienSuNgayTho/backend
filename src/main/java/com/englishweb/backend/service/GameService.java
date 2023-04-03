@@ -1,5 +1,6 @@
 package com.englishweb.backend.service;
 
+import com.englishweb.backend.entity.FillInBlank;
 import com.englishweb.backend.entity.FlashCard;
 import com.englishweb.backend.entity.User;
 import com.englishweb.backend.entity.WADTO;
@@ -9,21 +10,17 @@ import com.englishweb.backend.repository.WAOptionRepository;
 import com.englishweb.backend.repository.WAQuestionRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 public interface GameService {
+    // ------------------------Questions--------------------------------
 
     List<WAQuestions> getAllQuestions();
 
-    List<WAQuestions> findAllByLevelId(Long levelid);
+    List<WAQuestions> findAllByLessonId2(int lessonid);
 
-    List<WAOptions> findByQuestion(Long questionid);
-
-    void saveQuestions(Long questionId, String questionText, Long levelId);
-
-    void saveOptions(Long optionId, boolean isCorrect, String optionText, Long questionId);
+    void saveQuestions(String questionText, int lessonid);
 
     void deleteQuestionsById(Long questionId); // delete question by id
 
@@ -31,7 +28,19 @@ public interface GameService {
 
     void updateQuestions(WAQuestions question);
 
-    // other methods (FlashCard)
+    // ------------------------Options--------------------------------
+
+    void saveOptions(Long optionId, boolean isCorrect, String optionText, Long questionId);
+
+    void deleteOptionsById(Long optionId); // delete option by id
+
+    void updateOptions(WAOptions option);
+
+    WAOptions findOptionsByOptionId(Long optionId); // find options by question id
+
+    List<WAOptions> findByQuestion(Long questionid); // find options by question id
+
+    // (FlashCard)
 
     List<FlashCard> findAll();
 
@@ -45,4 +54,19 @@ public interface GameService {
 
     void updateFlashCard(FlashCard flashCard);
 
+    // FillInBlank
+
+    List<FillInBlank> findAllByLevelId(Long levelid);
+
+    List<FillInBlank> findAllFillInBlank();
+
+    void saveFillInBlank(FillInBlank fillInBlank);
+
+    void saveFillInBlankByLevel(String question, String answer, Long levelId);
+
+    void deleteFillInBlank(Long id);
+
+    FillInBlank findFillInBlanksById(Long id);
+
+    List<FillInBlank> findAllFillInBlanksByLevelId(Long levelId);
 }

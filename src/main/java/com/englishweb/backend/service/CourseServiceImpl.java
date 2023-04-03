@@ -53,4 +53,5 @@ public class CourseServiceImpl implements CourseService {
     public void deleteCourse(int courseId) {
         courseRepository.deleteFullCourse(courseId);       
     }
+
 }
