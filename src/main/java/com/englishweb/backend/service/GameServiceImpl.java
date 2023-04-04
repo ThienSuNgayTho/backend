@@ -2,6 +2,7 @@ package com.englishweb.backend.service;
 
 
 import com.englishweb.backend.entity.FlashCard;
+import com.englishweb.backend.entity.FlashCardDTO;
 import com.englishweb.backend.repository.FlashCardRepository;
 
 import jakarta.transaction.Transactional;
@@ -45,8 +46,10 @@ public class GameServiceImpl implements GameService{
        return flashCardRepository.findById(flashCardId).orElseThrow(() -> new IllegalArgumentException("Invalid flashcard Id:" + flashCardId));
     }
 
+    @Transactional
     @Override
-    public void updateFlashCard(FlashCard flashCard){
-        flashCardRepository.save(flashCard);
+    public void updateFlashCard(FlashCardDTO flashCard){
+        System.out.println(flashCard.getId());
+        flashCardRepository.updateFlashCard(flashCard.getFrontHTML(), flashCard.getBackHTML(), flashCard.getLessonId(), flashCard.getId());
     }
 }

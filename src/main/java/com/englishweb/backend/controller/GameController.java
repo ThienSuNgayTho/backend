@@ -38,8 +38,10 @@ public class GameController {
         }
         
     @GetMapping("/findFlashCard/{flashCardId}")
-    FlashCard findFlashCardById (@PathVariable (name = "flashCardId") Long flashCardId){
-        return gameService.findFlashCardById(flashCardId);
+    FlashCardDTO findFlashCardById (@PathVariable (name = "flashCardId") Long flashCardId){
+        FlashCard flashCard = gameService.findFlashCardById(flashCardId);
+        FlashCardDTO flashCardDTO = new FlashCardDTO(flashCard.getFlashCardId(), flashCard.getFrontHTML(), flashCard.getBackHTML(), flashCard.getLesson().getLessonId());
+        return flashCardDTO;
     } 
         
     @GetMapping("/findFlashCardByLessonId/{lessonId}")
@@ -52,13 +54,11 @@ public class GameController {
         return flashCardDTOs;
     }
 
-    @PutMapping("/updateFlashCard/{flashCardId}")
-        void updateFlashCard(@PathVariable (name = "flashCardId") Long flashCardId, @RequestBody FlashCard flashCard){
-            FlashCard flashCardToUpdate = gameService.findFlashCardById(flashCardId);
-            flashCardToUpdate.setFrontHTML(flashCard.getFrontHTML());
-            flashCardToUpdate.setBackHTML(flashCard.getBackHTML());
-            flashCardToUpdate.setLesson(flashCard.getLesson());
-            gameService.updateFlashCard(flashCardToUpdate);
+    @PutMapping("/updateFlashCard/{flashCardId}/{lessonId}")
+        void updateFlashCard(@PathVariable (name = "flashCardId") Long flashCardId, @RequestBody FlashCard flashCard, @PathVariable (name = "lessonId") int lessonId){
+            FlashCardDTO flashCardDTO = new FlashCardDTO(flashCardId, flashCard.getFrontHTML(), flashCard.getBackHTML(), lessonId);
+            System.out.println(flashCardDTO.getId());        
+            gameService.updateFlashCard(flashCardDTO);
         }
     
     @DeleteMapping("/deleteFlashCard/{flashCardId}")
