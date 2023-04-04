@@ -18,8 +18,8 @@ public class LessonServiceImpl implements LessonService{
 
     @Transactional
     @Override
-    public void saveCourse(String lessonName, String content, int courseId, String pdfFile) {
-        lessonRepository.saveLesson(lessonName, content, courseId, pdfFile);
+    public void saveCourse(String lessonName, String content, int courseId) {
+        lessonRepository.saveLesson(lessonName, content, courseId);
     }
 
     @Override
