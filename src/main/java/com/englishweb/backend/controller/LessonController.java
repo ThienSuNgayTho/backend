@@ -25,7 +25,7 @@ public class LessonController {
         List<Lesson> lessons = lessonService.findAllByCourseId(courseId);
         List<LessonDTO> lessonDTOs = new ArrayList<>();
         for (Lesson lesson : lessons) {
-            lessonDTOs.add(new LessonDTO(lesson.getLessonId(), lesson.getLessonName(), lesson.getContent(), lesson.getCourse().getCourseID()));
+            lessonDTOs.add(new LessonDTO(lesson.getLessonName(), lesson.getContent(), lesson.getPdfFile(), lesson.getCourse().getCourseID(), lesson.getLessonId()));
         }
         return lessonDTOs;
     }
@@ -37,19 +37,20 @@ public class LessonController {
 
     @PostMapping("/saveLesson/{courseId}")
     void saveLesson(@PathVariable (name = "courseId") int courseId , @RequestBody Lesson lesson){
-        lessonService.saveCourse(lesson.getLessonName(), lesson.getContent(), courseId);
+        lessonService.saveCourse(lesson.getLessonName(), lesson.getContent(), lesson.getPdfFile(), courseId);
     }
 
-    @PutMapping("/updateLesson/{lessonId}")
-    void updateLesson(@PathVariable (name = "lessonId") int lessonId , @RequestBody Lesson lesson){
-        Lesson lessonUpdate = lessonService.findLessonById(lessonId);
-        lessonUpdate.setLessonName(lesson.getLessonName());
-        lessonUpdate.setContent(lesson.getContent());
-        lessonService.updateLesson(lessonUpdate);
+    @PutMapping("/updateLesson/{lessonId}/{courseId}")
+    void updateLessonById(@PathVariable (name = "lessonId") int lessonId, @RequestBody Lesson lesson, @PathVariable (name = "courseId") int courseId){
+        LessonDTO lessonDTO = new LessonDTO(lesson.getLessonName(), lesson.getContent(), lesson.getPdfFile() ,courseId, lessonId);
+        lessonService.updateLessonById(lessonDTO);
+
     }
 
     @GetMapping("/findLesson/{lessonId}")
-    Lesson findLessonById (@PathVariable (name = "lessonId") int lessonId){
-        return lessonService.findLessonById(lessonId);
+    LessonDTO findLessonById (@PathVariable (name = "lessonId") int lessonId){
+        Lesson lesson = lessonService.findLessonById(lessonId);
+        LessonDTO toUpdateLesson = new LessonDTO(lesson.getLessonName(), lesson.getContent(), lesson.getPdfFile(), lesson.getCourse().getCourseID(), lesson.getLessonId());
+        return toUpdateLesson;
     }
 }

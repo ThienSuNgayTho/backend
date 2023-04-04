@@ -7,12 +7,17 @@ public class LessonDTO {
 
     private String content;
 
+    private String pdfFile;
+
     private int courseId;
 
-    public LessonDTO(int lessonId, String lessonName, String content, int courseId) {
+
+
+    public LessonDTO(String lessonName, String content, String pdfFile, int courseId,int lessonId ) {
         this.lessonId = lessonId;
         this.lessonName = lessonName;
         this.content = content;
+        this.pdfFile = pdfFile;
         this.courseId = courseId;
     }
 
@@ -38,6 +43,14 @@ public class LessonDTO {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getPdfFile() {
+        return pdfFile;
+    }
+
+    public void setPdfFile(String pdfFile) {
+        this.pdfFile = pdfFile;
     }
 
     public int getCourseId() {

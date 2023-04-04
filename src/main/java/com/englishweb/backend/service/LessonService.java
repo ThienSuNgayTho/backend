@@ -13,7 +13,9 @@ public interface LessonService {
 
     void deleteLessonById(int lessonId);
 
-    void saveCourse(String lessonName, String content, int courseId);
+    void saveCourse(String lessonName, String content, String pdfFile, int courseId);
 
     void updateLesson(Lesson lesson);
+
+    void updateLessonById(LessonDTO lessonDTO);
 }

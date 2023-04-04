@@ -18,8 +18,8 @@ public class LessonServiceImpl implements LessonService{
 
     @Transactional
     @Override
-    public void saveCourse(String lessonName, String content, int courseId) {
-        lessonRepository.saveLesson(lessonName, content, courseId);
+    public void saveCourse(String lessonName, String content, String pdfFile, int courseId) {
+        lessonRepository.saveLesson(lessonName, content, pdfFile, courseId);
     }
 
     @Override
@@ -45,6 +45,12 @@ public class LessonServiceImpl implements LessonService{
     @Override
     public Lesson findLessonById(int lessonId){
         return lessonRepository.findById(lessonId).orElseThrow(() -> new IllegalArgumentException("Invalid lesson Id:" + lessonId));
+    }
+
+    @Transactional
+    @Override
+    public void updateLessonById(LessonDTO lessonDTO) {
+        lessonRepository.updateLessonById(lessonDTO.getLessonName(), lessonDTO.getContent(), lessonDTO.getPdfFile(), lessonDTO.getCourseId(), lessonDTO.getLessonId());
     }
 
 }

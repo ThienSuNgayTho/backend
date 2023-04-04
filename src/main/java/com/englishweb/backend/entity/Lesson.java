@@ -37,9 +37,10 @@ public class Lesson {
 
     public Lesson() {}
 
-    public Lesson(String lessonName, String content, Course course) {
+    public Lesson(String lessonName, String content, String pdfFile, Course course) {
         this.lessonName = lessonName;
         this.content = content;
+        this.pdfFile = pdfFile;
         this.course = course;
     }
 
@@ -67,6 +68,14 @@ public class Lesson {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getPdfFile() {
+        return pdfFile;
+    }
+
+    public void setPdfFile(String pdfFile) {
+        this.pdfFile = pdfFile;
     }
 
     public Course getCourse() {
