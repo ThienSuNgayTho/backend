@@ -1,5 +1,6 @@
 package com.englishweb.backend.entity;
 
+
 import jakarta.persistence.*;
 
 @Entity
@@ -28,7 +29,6 @@ public class Level {
 		this.levelName = levelName;
 	}
 
-    // constructors, getters, and setters
-    
-}
+	// constructors, getters, and setters
 
+}

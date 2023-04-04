@@ -13,7 +13,7 @@ public interface LessonService {
 
     void deleteLessonById(int lessonId);
 
-    void saveCourse(String lessonName, String content, int courseId, String pdfFile);
+    void saveCourse(String lessonName, String content, int courseId);
 
     void updateLesson(Lesson lesson);
 }

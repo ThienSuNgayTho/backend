@@ -16,4 +16,8 @@ public interface FlashCardRepository extends JpaRepository<FlashCard, Long > {
     @Modifying
     @Query(value = "INSERT INTO flash_card (fronthtml, backhtml, lessonid) VALUES (?1, ?2, ?3)", nativeQuery = true)
     void saveFlashCard(String frontHTML, String backHTML, int lessonId);
+
+    @Modifying
+    @Query(value = "UPDATE flash_card SET fronthtml = ?1, backhtml = ?2, lessonid = ?3 WHERE flash_card_id = ?4 ", nativeQuery = true)
+    void updateFlashCard(String frontHTML, String backHTML, int lessonId, Long flashCardId);
 }
