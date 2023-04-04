@@ -58,6 +58,10 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
+    public UserDetailsService userDetailsService(){
+        return userDetailsService;
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()

@@ -1,5 +1,4 @@
 package com.englishweb.backend.entity;
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,9 +33,9 @@ public class Course {
     private String images;
 
     @Column(name = "Payment")
-    private int payment;
+    private Integer payment;
 
-    @Column(name = "PublicId")
+    @Column(name = "PID")
     private String pid;
 
     @ManyToOne(cascade = CascadeType.MERGE)
@@ -51,7 +50,6 @@ public class Course {
     @JoinColumn(name = "TopicID", nullable = false)
     private Topic topic;    
 
-    // Constructors, getters, and setters
 
     public Course() {
     }
