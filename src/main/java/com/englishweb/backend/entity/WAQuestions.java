@@ -25,7 +25,7 @@ public class WAQuestions {
     // @JoinColumn(name ="LessonName")
     // private Lesson lessonName;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<WAOptions> option;
     // getters and setters

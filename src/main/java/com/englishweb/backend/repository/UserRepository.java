@@ -14,9 +14,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     // @Query(value = "SELECT * FROM users u WHERE u.username = :username AND u.password = :password", nativeQuery = true)
     // public User getUserByUsername(String username, String password);
 
-    Optional<User> findByEmail(String email);
+    // Optional<User> findByEmail(String email);
 
-    Optional<User> findByUsernameOrEmail(String username, String email);
+    // Optional<User> findByUsernameOrEmail(String username, String email);
 
     Optional<User> findByUsername(String username);
 
@@ -27,15 +27,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     User getUserByUsername(String username);
 
     User getUserByUsernameAndPassword(String username, String password);
-
-    User getUserById(int id);
-
-    User updateUser(User user);
-
-    void deleteUser(int id);
-
-
-    User getUserByEmail(String email);
 
     
 

@@ -31,7 +31,7 @@ public class Lesson {
     @JoinColumn(name = "CourseId", nullable = false)
     private Course course;
 
-    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.MERGE)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<FlashCard> flashCard;
     // constructors, getters, and setters
