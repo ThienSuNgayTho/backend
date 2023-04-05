@@ -15,6 +15,7 @@ import com.englishweb.backend.entity.Course;
 import com.englishweb.backend.entity.CourseDTO;
 import com.englishweb.backend.entity.Level;
 import com.englishweb.backend.entity.Topic;
+import com.englishweb.backend.entity.TopicDTO;
 import com.englishweb.backend.entity.User;
 import com.englishweb.backend.repository.CourseRepository;
 import com.englishweb.backend.repository.TopicRepository;
@@ -144,5 +145,15 @@ public class CourseController {
         Course courseUpdate = courseService.findCourseById(courseId);
         cloudinaryService.deleteImage(courseUpdate.getPid());
         courseService.deleteCourse(courseId);
+    }
+
+    @GetMapping("/loadTopics")
+    List<TopicDTO> loadTopic() {
+        List<Topic> topics = topicService.findAllTopics();
+        List<TopicDTO> topicDTOs = new ArrayList<>();
+        for (Topic topic : topics) {
+            topicDTOs.add(new TopicDTO(topic.getTopicId(), topic.getTopicName()));
+        }
+        return topicDTOs;
     }
 }

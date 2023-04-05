@@ -39,8 +39,8 @@ public class Course {
     @Column(name = "PublicId")
     private String pid;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "TeacherId", referencedColumnName = "UserID", nullable = false)
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "TeacherId", referencedColumnName = "UserID")
     private User teacher;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.MERGE)

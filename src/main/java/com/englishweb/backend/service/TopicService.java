@@ -9,4 +9,6 @@ public interface TopicService {
             
     Topic findTopicById(int topicId);
 
+    List<Topic> findAllTopics();
+
 }

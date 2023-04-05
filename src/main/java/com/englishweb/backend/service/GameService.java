@@ -1,6 +1,7 @@
 package com.englishweb.backend.service;
 
 import com.englishweb.backend.entity.FlashCard;
+import com.englishweb.backend.entity.FlashCardDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,6 @@ public interface GameService {
 
     FlashCard findFlashCardById(Long flashCardId);
 
-    void updateFlashCard(FlashCard flashCard);
+    void updateFlashCard(FlashCardDTO flashCard);
 
 }
