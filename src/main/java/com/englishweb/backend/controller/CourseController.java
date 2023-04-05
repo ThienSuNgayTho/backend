@@ -121,8 +121,8 @@ public class CourseController {
         // System.out.println("image"+courseUpdate.getImages());
         User teacher = userService.findUserById(teacherId);
         Level level = new Level();
-        Topic topic = topicService.findTopicById(topicId);
         level.setLevelId(levelId);
+        Topic topic = topicService.findTopicById(topicId);
 
         courseUpdate.setCourseName(courseName);
         courseUpdate.setDescriptions(descriptions);

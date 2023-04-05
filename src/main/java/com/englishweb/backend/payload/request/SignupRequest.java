@@ -7,20 +7,13 @@ import jakarta.validation.constraints.NotBlank;
 public class SignupRequest {
     @NotBlank
     private String username;
-
     @NotBlank
     private String email;
-
     private String fullName;
-
     private Set<String> role;
-
     private String address;
-
     private String phoneNumber;
-
     private int level;
-
     @NotBlank
     private String password;
 
