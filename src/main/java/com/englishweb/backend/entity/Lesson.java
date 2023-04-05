@@ -1,10 +1,14 @@
 package com.englishweb.backend.entity;
-import jakarta.persistence.*;
-
 import java.util.List;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import jakarta.persistence.*;
+import java.util.List;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 public class Lesson {
 
@@ -19,6 +23,9 @@ public class Lesson {
     @Column(name = "Content")
     private String content;
 
+    @Column(name = "pdf_file")
+    private String pdfFile;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "CourseId", nullable = false)
     private Course course;
@@ -26,14 +33,14 @@ public class Lesson {
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.MERGE)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<FlashCard> flashCard;
-
     // constructors, getters, and setters
 
     public Lesson() {}
 
-    public Lesson(String lessonName, String content, Course course) {
+    public Lesson(String lessonName, String content, String pdfFile, Course course) {
         this.lessonName = lessonName;
         this.content = content;
+        this.pdfFile = pdfFile;
         this.course = course;
     }
 
@@ -61,6 +68,14 @@ public class Lesson {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getPdfFile() {
+        return pdfFile;
+    }
+
+    public void setPdfFile(String pdfFile) {
+        this.pdfFile = pdfFile;
     }
 
     public Course getCourse() {

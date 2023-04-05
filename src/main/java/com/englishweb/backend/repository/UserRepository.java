@@ -1,5 +1,6 @@
 package com.englishweb.backend.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +16,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Boolean existsByUsername(String username);
 
     Boolean existsByEmail(String email);
+
+    User getUserByUsername(String username);
+
+    User getUserByUsernameAndPassword(String username, String password);
+
+    
 
 }

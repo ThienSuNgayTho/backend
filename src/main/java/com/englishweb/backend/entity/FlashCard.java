@@ -13,15 +13,18 @@ public class FlashCard {
 
     private String backHTML;
 
+    @ManyToOne(fetch = FetchType.EAGER)
     public Long getFlashCardId() {
         return flashCardId;
     }
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.MERGE)
     @JoinColumn(name = "LessonID")
     private Lesson lesson;
+
     public void setFlashCardId(Long flashCardId) {
         this.flashCardId = flashCardId;
     }
+
 
     public String getFrontHTML() {
         return frontHTML;

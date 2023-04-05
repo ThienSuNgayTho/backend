@@ -145,6 +145,8 @@ public class CourseController {
         Course courseUpdate = courseService.findCourseById(courseId);
         cloudinaryService.deleteImage(courseUpdate.getPid());
         courseService.deleteCourse(courseId);
+    
+   
     }
 
     @GetMapping("/loadTopics")
