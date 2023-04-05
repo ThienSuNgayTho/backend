@@ -1,6 +1,7 @@
 package com.englishweb.backend.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,7 @@ public class UserController {
 	PasswordEncoder encoder;
 
 	@PutMapping("/update/user/{userId}")
-	ResponseEntity<?> updateUser(@RequestBody User user,@PathVariable (name = "userId") int id) {
+	ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable(name = "userId") int id) {
 		User us = userService.findUserById(id);
 		us.setUsername(user.getUsername());
 		us.setPassword(encoder.encode(user.getPassword()));
@@ -48,7 +49,7 @@ public class UserController {
 		us.setStatus(user.getStatus());
 
 		userService.saveOrUpdateUser(us);
-		return new ResponseEntity(us,HttpStatus.OK);
+		return new ResponseEntity(us, HttpStatus.OK);
 	}
 
 	@GetMapping("/list")
@@ -56,9 +57,9 @@ public class UserController {
 		return userService.findAll();
 	}
 
-	@GetMapping("/user/list")
-	public List<User> getAllUser() {
-		return userRepository.findAll();
+	@GetMapping("/list/{userId}")
+	public Optional<User> getUserById(@PathVariable(name = "userId") int id) {
+		return userRepository.findById(id);
 	}
 
 }
