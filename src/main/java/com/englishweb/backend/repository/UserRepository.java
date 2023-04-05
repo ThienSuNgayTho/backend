@@ -10,13 +10,6 @@ import com.englishweb.backend.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    // @Query(value = "SELECT * FROM users u WHERE u.username = :username AND u.password = :password", nativeQuery = true)
-    // public User getUserByUsername(String username, String password);
-
-    // Optional<User> findByEmail(String email);
-
-    // Optional<User> findByUsernameOrEmail(String username, String email);
-
     Optional<User> findByUsername(String username);
 
     Boolean existsByUsername(String username);

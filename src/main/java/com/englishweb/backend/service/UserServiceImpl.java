@@ -36,4 +36,12 @@ public class UserServiceImpl implements UserService {
     public User findUserById(int userId) {
         return userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + userId));
     }
+
+    @Override
+    public Boolean checkStatusByUsername(String username) {
+      Optional<User> ur = userRepository.findByUsername(username);
+      if (ur.get().getStatus() == true) {
+        return true;
+      } else return false;
+    }
 }
