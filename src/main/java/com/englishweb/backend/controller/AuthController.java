@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,6 +35,7 @@ import com.englishweb.backend.payload.response.MessageResponse;
 import com.englishweb.backend.repository.RoleRepository;
 import com.englishweb.backend.repository.UserRepository;
 import com.englishweb.backend.service.UserDetailsImpl;
+import com.englishweb.backend.service.UserServiceImpl;
 
 import jakarta.validation.Valid;
 
@@ -54,6 +56,9 @@ public class AuthController {
     RoleRepository roleRepository;
 
     @Autowired
+    UserServiceImpl userServiceImpl;
+
+    @Autowired
     PasswordEncoder encoder;
 
     @Autowired
@@ -64,6 +69,7 @@ public class AuthController {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        if (userServiceImpl.checkStatusByUsername(loginRequest.getUsername()) == true) {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
@@ -82,6 +88,8 @@ public class AuthController {
                 userDetails.getPhoneNumer(),
                 userDetails.getLevel(),
                 roles));
+        }
+        else return new ResponseEntity(HttpStatus.FORBIDDEN);
     }
 
     @PostMapping("/signup")
@@ -105,7 +113,7 @@ public class AuthController {
                 signUpRequest.getFullname(),
                 signUpRequest.getAddress(),
                 signUpRequest.getPhoneNumber(),
-                signUpRequest.getLevel());
+                signUpRequest.getLevel(),true);
 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();

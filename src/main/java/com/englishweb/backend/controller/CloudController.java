@@ -44,53 +44,12 @@ public class CloudController {
 	@Autowired
 	VideoService videoService;
 
-	// @Autowired
-	// ImageService imageService;
-
-	// Image
-
-	// @GetMapping("/image/list")
-	// public ResponseEntity<List<Image>> list() {
-	// 	List<Image> list = imageService.list();
-	// 	return new ResponseEntity(list, HttpStatus.OK);
-	// }
-
-	// @GetMapping("/image/list/{id}")
-	// public ResponseEntity<List<ImageDTO>> listImageById(@PathVariable(name = "id") int id) {
-	// 	List<Image> lists = imageService.listId(id);
-	// 	List<ImageDTO> listDTO = new ArrayList<>();
-	// 	for (Image list : lists) {
-	// 		listDTO.add(new ImageDTO(list.getId(), list.getImageName(), list.getImageURL()));
-	// 	}
-	// 	return new ResponseEntity(listDTO, HttpStatus.OK);
-	// }
-
-	// @DeleteMapping("/image/delete/{id}")
-	// public ResponseEntity<?> deleteImage(@PathVariable("id") int id) throws IOException {
-	// 	if (!imageService.exists(id)) {
-	// 		return new ResponseEntity(HttpStatus.NOT_FOUND);
-	// 	}
-	// 	Image image = imageService.getOne(id).get();
-	// 	Map result = cloudinaryService.deleteImage(image.getImageId());
-	// 	imageService.delete(id);
-	// 	return new ResponseEntity(result, HttpStatus.OK);
-	// }
-	// @CrossOrigin
-	// @PostMapping("/image/upload/{id}")
-	// public ResponseEntity<?> uploadImage(@RequestParam MultipartFile multipartFile, @PathVariable int id)
-	// 		throws IOException {
-	// 	Map result = cloudinaryService.uploadImage(multipartFile);
-	// 	Image image = new Image((String) result.get("original_filename"), (String) result.get("url"),
-	// 			(String) result.get("public_id"), id);
-	// 	imageService.save(image);
-	// 	return new ResponseEntity(result, HttpStatus.OK);
-	// }
-
-	// Video
+	@Autowired
+	VideoRepository videoRepository;
 
 	@GetMapping("/list")
-	public ResponseEntity<List<Video>> listVideo() {
-		List<Video> list = videoService.list();
+	public ResponseEntity<?> listVideo() {
+		List<Video> list = videoRepository.findAll();
 		return new ResponseEntity(list, HttpStatus.OK);
 	}
 
@@ -125,19 +84,4 @@ public class CloudController {
 		return new ResponseEntity(result, HttpStatus.OK);
 	}
 
-	// @PutMapping("/update/{id}")
-	// public ResponseEntity<Video> update(@PathVariable("id") int id, @RequestParam
-	// Video video,
-	// @RequestParam MultipartFile multipartFile)
-	// throws IOException {
-	// Video video = videoService.getOne(id).get();
-	// Map result = cloudinaryService.delete(video.getVideoId());
-	// result = cloudinaryService.upload(multipartFile);
-	// video = new Video((String) result.get("original_filename"), (String)
-	// result.get("url"), id,
-	// (String) result.get("public_id"));
-	// video.setLesson(video.getLesson());
-	// videoService.save(video);
-	// return new ResponseEntity(HttpStatus.OK);
-	// }
 }

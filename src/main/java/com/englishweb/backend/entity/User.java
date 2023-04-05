@@ -42,6 +42,9 @@ public class User {
   @Column(name = "Level")
   private int level;
 
+  @Column(name = "Status")
+  private boolean status;
+
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "UserId"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "RoleId"))
   private Set<Role> roles = new HashSet<>();
@@ -49,15 +52,24 @@ public class User {
   public User() {
   }
 
-  public User(String username, String email, String password, String fullnName,
-      String address, String phoneNumer, int level) {
+  public User(String username, String email, String password, String fullName,
+      String address, String phoneNumber, int level, boolean status) {
     this.username = username;
     this.email = email;
     this.password = password;
-    this.fullName = fullnName;
+    this.fullName = fullName;
     this.address = address;
-    this.phoneNumber = phoneNumer;
+    this.phoneNumber = phoneNumber;
     this.level = level;
+    this.status = status;
   }
 
+  
+    public Boolean getStatus() {
+        return status;
+    }
+    
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 }

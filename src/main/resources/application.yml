@@ -21,4 +21,4 @@ spring:
       enabled: 'true'
 app:
   jwtSecret: JWTSecretKey
-  jwtExpirationMs: '86400000'
+  jwtExpirationMs: '864000000'
