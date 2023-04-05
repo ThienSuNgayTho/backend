@@ -32,7 +32,7 @@ public class Video {
 	public Video(String videoname, String videoURL, int lesson, String videoId) {
 		this.videoname = videoname;
 		this.videoURL = videoURL;
-		this.lesson.setLessonId(lesson);
+		this.lesson.setLessonId(lesson);	
 		this.videoId = videoId;
 	}
 
